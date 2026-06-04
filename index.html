@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Наши свидания 💕</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#fafafa;color:#1a1a1a;min-height:100vh}
+.app{max-width:1100px;margin:0 auto;padding:1.5rem 1rem 3rem}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:12px}
+.header-title h1{font-size:22px;font-weight:600;color:#1a1a1a;display:flex;align-items:center;gap:8px}
+.header-title p{font-size:13px;color:#666;margin-top:3px}
+.sync-bar{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;background:#fff;border:1px solid #eee;margin-bottom:1.25rem;font-size:12px;color:#666;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;transition:background .3s}
+.sync-dot.syncing{background:#f59e0b;animation:pulse 1s infinite}
+.sync-dot.error{background:#ef4444}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
+.filter-btn{padding:6px 14px;border-radius:20px;border:1px solid #e5e5e5;background:#fff;color:#555;font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;transition:all .15s}
+.filter-btn.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.filter-btn:hover:not(.active){background:#f5f5f5}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.card{background:#fff;border:1px solid #eee;border-radius:14px;overflow:hidden;transition:box-shadow .2s,border-color .2s;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);border-color:#ddd}
+.card.liked{border-left:3px solid #f43f5e}
+.card.done{border-left:3px solid #22c55e}
+.card-img-wrap{position:relative;width:100%;height:170px;background:#f3f4f6;overflow:hidden}
+.card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
+.card-img.loaded{opacity:1}
+.card-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:48px}
+.card-body{padding:1rem}
+.card-title{font-size:14px;font-weight:600;color:#1a1a1a;line-height:1.35;margin-bottom:5px}
+.card-meta{display:flex;align-items:center;gap:7px;margin-bottom:7px;flex-wrap:wrap}
+.card-cat{font-size:11px;padding:2px 8px;border-radius:20px;white-space:nowrap;font-weight:500}
+.cat-active{background:#fdf2f8;color:#9d174d}
+.cat-trip{background:#eff6ff;color:#1e40af}
+.cat-food{background:#fffbeb;color:#92400e}
+.cat-sport{background:#f0fdf4;color:#166534}
+.cat-culture{background:#f5f3ff;color:#5b21b6}
+.cat-spa{background:#ecfdf5;color:#065f46}
+.rating-sm{font-size:12px;color:#f59e0b;font-weight:500}
+.done-tag{font-size:11px;color:#16a34a;font-weight:500}
+.card-desc{font-size:12px;color:#666;margin-bottom:12px;line-height:1.55}
+.card-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:8px;border:1px solid #e5e5e5;background:#fff;color:#555;font-size:11px;font-family:'Inter',sans-serif;cursor:pointer;transition:all .15s;font-weight:500}
+.btn:hover{background:#f5f5f5}
+.btn.like-on{color:#f43f5e;border-color:#fda4af;background:#fff1f2}
+.btn.done-on{color:#16a34a;border-color:#86efac;background:#f0fdf4}
+.btn-map{border-color:#bfdbfe;background:#eff6ff;color:#1d4ed8}
+.btn-map:hover{background:#dbeafe}
+.btn-site{border-color:#fde68a;background:#fffbeb;color:#92400e}
+.btn-site:hover{background:#fef3c7}
+.done-section{padding:.875rem 1rem;border-top:1px solid #f3f4f6;background:#fafafa}
+.stars-wrap{display:flex;gap:3px;margin-bottom:8px}
+.star{font-size:22px;cursor:pointer;color:#d1d5db;transition:color .1s;line-height:1;user-select:none}
+.star.on{color:#f59e0b}
+.review-ta{width:100%;font-size:12px;padding:7px 10px;border-radius:8px;border:1px solid #e5e5e5;background:#fff;color:#1a1a1a;resize:none;height:54px;font-family:'Inter',sans-serif;transition:border-color .15s}
+.review-ta:focus{outline:none;border-color:#a3a3a3}
+.date-row{display:flex;align-items:center;gap:8px;margin-top:8px}
+.date-row label{font-size:11px;color:#888}
+.date-row input[type=date]{font-size:11px;padding:4px 8px;border-radius:8px;border:1px solid #e5e5e5;background:#fff;color:#1a1a1a;font-family:'Inter',sans-serif}
+.repeat-badge{font-size:11px;padding:2px 8px;background:#f0fdf4;color:#16a34a;border-radius:20px;font-weight:500;margin-left:auto}
+.divider{height:1px;background:#f0f0f0;margin:2rem 0 1rem}
+.add-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:12px;border:1.5px dashed #d1d5db;background:transparent;color:#888;font-size:13px;font-family:'Inter',sans-serif;cursor:pointer;width:100%;transition:all .15s}
+.add-btn:hover{background:#f9fafb;color:#555;border-color:#9ca3af}
+.add-form{background:#fff;border-radius:14px;border:1px solid #eee;padding:1.25rem;margin-top:12px;display:none;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.add-form h3{font-size:14px;font-weight:600;margin-bottom:1rem;color:#1a1a1a}
+.form-row{margin-bottom:10px}
+.form-row label{display:block;font-size:11px;font-weight:500;color:#666;margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
+.form-row input,.form-row textarea,.form-row select{width:100%;font-size:13px;font-family:'Inter',sans-serif;padding:8px 10px;border-radius:8px;border:1px solid #e5e5e5;color:#1a1a1a;background:#fafafa;transition:border-color .15s}
+.form-row input:focus,.form-row textarea:focus,.form-row select:focus{outline:none;border-color:#a3a3a3;background:#fff}
+.form-btns{display:flex;gap:8px;margin-top:12px}
+.btn-primary{padding:8px 18px;border-radius:8px;border:none;background:#1a1a1a;color:#fff;font-size:13px;font-family:'Inter',sans-serif;cursor:pointer;font-weight:500;transition:background .15s}
+.btn-primary:hover{background:#333}
+.btn-cancel{padding:8px 14px;border-radius:8px;border:1px solid #e5e5e5;background:#fff;color:#666;font-size:13px;font-family:'Inter',sans-serif;cursor:pointer}
+.empty{text-align:center;padding:3rem 1rem;color:#888;font-size:14px}
+.map-all-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;border:1px solid #e5e5e5;background:#fff;color:#1a1a1a;font-size:12px;font-weight:500;font-family:'Inter',sans-serif;text-decoration:none;cursor:pointer;transition:all .15s;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.map-all-btn:hover{background:#f5f5f5}
+@media(max-width:600px){
+  .cards-grid{grid-template-columns:1fr}
+  .header{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="header-title">
+      <h1>💕 Наши свидания</h1>
+      <p>Общий список — изменения видны обоим в реальном времени</p>
+    </div>
+    <a class="map-all-btn" id="all-map-btn" href="https://yandex.ru/maps/?text=рестораны+Москва" target="_blank">
+      🗺 Все на карте
+    </a>
+  </div>
+
+  <div class="sync-bar">
+    <div class="sync-dot syncing" id="sync-dot"></div>
+    <span id="sync-text">Подключаемся к Firebase...</span>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="setFilter('all',this)">Все</button>
+    <button class="filter-btn" onclick="setFilter('liked',this)">❤️ Нравится</button>
+    <button class="filter-btn" onclick="setFilter('done',this)">✅ Были</button>
+    <button class="filter-btn" onclick="setFilter('nodone',this)">📋 Ещё не были</button>
+    <button class="filter-btn" onclick="setFilter('trip',this)">✈️ Поездки</button>
+    <button class="filter-btn" onclick="setFilter('sport',this)">⚡ Спорт</button>
+    <button class="filter-btn" onclick="setFilter('food',this)">🍽️ Рестораны</button>
+    <button class="filter-btn" onclick="setFilter('spa',this)">🛁 Спа</button>
+    <button class="filter-btn" onclick="setFilter('culture',this)">🎭 Культура</button>
+    <button class="filter-btn" onclick="setFilter('active',this)">🎯 Активное</button>
+  </div>
+
+  <div class="cards-grid" id="cards-grid">
+    <div class="empty">Загрузка...</div>
+  </div>
+
+  <div class="divider"></div>
+  <button class="add-btn" onclick="toggleAdd()">+ Добавить свою идею</button>
+  <div class="add-form" id="add-form">
+    <h3>Новая идея</h3>
+    <div class="form-row">
+      <label>Название</label>
+      <input type="text" id="n-title" placeholder="Название свидания">
+    </div>
+    <div class="form-row">
+      <label>Описание</label>
+      <textarea id="n-desc" style="height:60px" placeholder="Пара слов о формате..."></textarea>
+    </div>
+    <div class="form-row">
+      <label>Категория</label>
+      <select id="n-cat">
+        <option value="active">🎯 Активное</option>
+        <option value="trip">✈️ Поездка</option>
+        <option value="food">🍽️ Ресторан</option>
+        <option value="sport">⚡ Спорт</option>
+        <option value="culture">🎭 Культура</option>
+        <option value="spa">🛁 Спа / Релакс</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label>Ссылка на фото (прямой URL .jpg / .png)</label>
+      <input type="text" id="n-img" placeholder="https://...">
+    </div>
+    <div class="form-row">
+      <label>Адрес для Яндекс Карт</label>
+      <input type="text" id="n-addr" placeholder="Москва, ул. ...">
+    </div>
+    <div class="form-row">
+      <label>Сайт (необязательно)</label>
+      <input type="text" id="n-link" placeholder="https://...">
+    </div>
+    <div class="form-btns">
+      <button class="btn-primary" onclick="addIdea()">Добавить</button>
+      <button class="btn-cancel" onclick="toggleAdd()">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  databaseURL: "https://curly-dates-default-rtdb.europe-west1.firebasedatabase.app/"
+};
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const ideasRef = ref(db, 'ideas');
+
+window._db = db;
+window._ref = ref;
+window._set = set;
+window._update = update;
+window._ideasRef = ideasRef;
+
+const catMeta = {
+  active:  { label:'Активное',  cls:'cat-active',  emoji:'🎯' },
+  trip:    { label:'Поездка',   cls:'cat-trip',    emoji:'✈️' },
+  food:    { label:'Ресторан',  cls:'cat-food',    emoji:'🍽️' },
+  sport:   { label:'Спорт',     cls:'cat-sport',   emoji:'⚡' },
+  culture: { label:'Культура',  cls:'cat-culture', emoji:'🎭' },
+  spa:     { label:'Спа',       cls:'cat-spa',     emoji:'🛁' },
+};
+
+const SEED = [
+  {id:'1',  title:'Гольф-симулятор CityGolf',      cat:'sport',   desc:'Аминьевское ш., 6. Новые симуляторы, ресторан, Golfmarket. Рейтинг 4.6.',              addr:'Москва, Аминьевское шоссе, 6',       link:'https://citygolf.ru',                         img:'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'2',  title:'Спа с сауной и массажем',        cat:'spa',     desc:'Частная баня на двоих — сауна, хороший массаж. Подборка @svalika_wellbeing.',            addr:'Москва',                             link:'https://www.instagram.com/p/DYSPIP8DaTf/', img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80',  liked:true, done:false,date:'',rating:0,review:'',times:0},
+  {id:'3',  title:'Катер без прав — Строгино',      cat:'active',  desc:'Управляешь сам, права не нужны. Строгино — Серебряный бор.',                            addr:'Москва, Строгино, яхт-клуб Медуза',  link:'https://thelodka.ru',                         img:'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'4',  title:'Бурлеск-кабаре Гримёрка',       cat:'culture', desc:'Пушечная, 9/6. «Мадам Бум» — джаз, блёстки, варьете 20-х. 18+.',                        addr:'Москва, Пушечная улица, 9/6',        link:'https://grimerka.art/madamboom',               img:'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'5',  title:'Ресторан ИКРА',                  cat:'food',    desc:'Большая Никитская, 5. Chef\'s table на 16 мест, сеты от Мухина и топ-шефов WRF.',        addr:'Москва, Большая Никитская, 5',       link:'',                                            img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80',  liked:true, done:true, date:'',rating:4,review:'',times:1},
+  {id:'6',  title:'Ресторан AYU',                   cat:'food',    desc:'Романов пер., 2. Омакасэ 22 подачи, 300-летний кипарис хиноки, всего 12 мест.',          addr:'Москва, Романов переулок, 2',        link:'',                                            img:'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&q=80',  liked:true, done:true, date:'',rating:5,review:'',times:1},
+  {id:'7',  title:'Ресторан Olluco',                cat:'food',    desc:'Даев пер., 19. Перуанская кухня от #1 в мире Вирхилио Мартинеса. Рейтинг 4.5.',          addr:'Москва, Даев переулок, 19',          link:'',                                            img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80',  liked:true, done:true, date:'',rating:4,review:'',times:0},
+  {id:'8',  title:'Планетарий — вечер под куполом', cat:'culture', desc:'Садовая-Кудринская, 5. Программа «Только для вас» + Парк неба + Большая обсерватория.',   addr:'Москва, Садовая-Кудринская, 5',      link:'https://planetarium-moscow.ru',               img:'https://images.unsplash.com/photo-1532798369041-b33eb576ef16?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'9',  title:'Винная дегустация',              cat:'food',    desc:'Слепая дегустация у сомелье — интереснее любого ресторана.',                             addr:'Москва',                             link:'',                                            img:'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'10', title:'Матч: футбол / хоккей / теннис', cat:'sport',   desc:'Лужники, ВТБ Арена — атмосфера живого матча не сравнима с телевизором.',                 addr:'Москва, стадион Лужники',            link:'https://tickets.spartakmoscow.ru',             img:'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'11', title:'Поездка в Казань',               cat:'trip',    desc:'Отель с выходом прямо на стадион — viral-рилс. 800 км, долететь 1 час.',                  addr:'Казань, стадион Ак Барс Арена',      link:'https://www.instagram.com/reel/DX4qLTuRmEg/',img:'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80',  liked:true, done:false,date:'',rating:0,review:'',times:0},
+  {id:'12', title:'Moscow Raceway — гонки',         cat:'sport',   desc:'Шелудьково, Подмосковье. Один из лучших треков России. Рейтинг 4.8.',                     addr:'Шелудьково, Московская область',     link:'https://moscowraceway.ru',                    img:'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'13', title:'Вертолётный тур над Москвой',    cat:'active',  desc:'30–40 минут над Кремлём, рекой и Сити. Незабываемо — как раз ваш формат.',               addr:'Москва',                             link:'',                                            img:'https://images.unsplash.com/photo-1534481016308-0fca71578ae5?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'14', title:'Ужин на крыше / панорамный',     cat:'food',    desc:'Sixty, Babel или закрытые roof-вечера. Вид на Москву + хорошая кухня.',                   addr:'Москва, Москва-Сити',                link:'',                                            img:'https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'15', title:'Стрельба из лука / тир',         cat:'active',  desc:'Archery-клуб или закрытый тир — новый опыт вдвоём, азартно, не банально.',               addr:'Москва',                             link:'',                                            img:'https://images.unsplash.com/photo-1569517282132-25d22f4573e6?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'16', title:'Яхта или SUP на закате',         cat:'active',  desc:'Яхта с капитаном или SUP-доски по вечернему Строгино.',                                   addr:'Москва, Строгино',                   link:'',                                            img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'17', title:'Иммерсивный театр',              cat:'culture', desc:'«Чёрная курица» или DetectivePro — история + живые актёры + загадки.',                    addr:'Москва',                             link:'',                                            img:'https://images.unsplash.com/photo-1503095396549-807759245b35?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'18', title:'SPA-выходные — Foresta',         cat:'trip',    desc:'Foresta Festival Park — термы, баня, лес, коттеджи. Час от Москвы. Рейтинг 4.2.',         addr:'Прохорово, Подмосковье',             link:'https://foresta.su',                          img:'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'19', title:'Конный выезд или параплан',      cat:'active',  desc:'Конная прогулка в Подмосковье или тандем на параплане с инструктором.',                   addr:'Подмосковье',                        link:'',                                            img:'https://images.unsplash.com/photo-1553284966-19b8815c7817?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'20', title:'Кино в Пионере',                 cat:'culture', desc:'Кутузовский, 21. Авторское кино, фестивальные хиты, коктейль-бар. Рейтинг 4.8.',          addr:'Москва, Кутузовский проспект, 21',   link:'https://pioner-cinema.ru',                    img:'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+];
+
+let ideas = [];
+let filter = 'all';
+let initialized = false;
+
+function setSyncStatus(status, text) {
+  const dot = document.getElementById('sync-dot');
+  const label = document.getElementById('sync-text');
+  dot.className = 'sync-dot' + (status === 'syncing' ? ' syncing' : status === 'error' ? ' error' : '');
+  label.textContent = text;
+}
+
+// Listen to Firebase in real-time
+onValue(ideasRef, (snapshot) => {
+  const data = snapshot.val();
+  if (data) {
+    ideas = Object.values(data).sort((a, b) => Number(a.id) - Number(b.id));
+    setSyncStatus('ok', 'Синхронизировано · ' + new Date().toLocaleTimeString('ru', {hour:'2-digit', minute:'2-digit'}));
+  } else if (!initialized) {
+    // First launch — write seed data
+    const seedObj = {};
+    SEED.forEach(item => { seedObj[item.id] = item; });
+    set(ideasRef, seedObj).then(() => {
+      setSyncStatus('ok', 'База создана — данные общие для вас двоих ❤️');
+    });
+  }
+  initialized = true;
+  render();
+}, (error) => {
+  setSyncStatus('error', 'Ошибка подключения — ' + error.message);
+});
+
+async function patchIdea(id, patch) {
+  setSyncStatus('syncing', 'Сохраняем...');
+  try {
+    await update(ref(db, 'ideas/' + id), patch);
+  } catch(e) {
+    setSyncStatus('error', 'Не удалось сохранить');
+  }
+}
+
+window.toggleLike = async function(id) {
+  const d = ideas.find(x => x.id === id);
+  if (!d) return;
+  await patchIdea(id, { liked: !d.liked });
+};
+
+window.toggleDone = async function(id) {
+  const d = ideas.find(x => x.id === id);
+  if (!d) return;
+  const newDone = !d.done;
+  const newTimes = newDone ? (d.times || 0) + 1 : Math.max(0, (d.times || 1) - 1);
+  await patchIdea(id, { done: newDone, times: newTimes });
+};
+
+window.doRepeat = async function(id) {
+  const d = ideas.find(x => x.id === id);
+  if (!d) return;
+  await patchIdea(id, { times: (d.times || 1) + 1 });
+};
+
+window.setRating = async function(id, r) {
+  await patchIdea(id, { rating: r });
+};
+
+window.saveReview = async function(id) {
+  const ta = document.getElementById('rev-' + id);
+  if (!ta) return;
+  await patchIdea(id, { review: ta.value });
+};
+
+window.saveDate = async function(id, val) {
+  await patchIdea(id, { date: val });
+};
+
+window.setFilter = function(f, btn) {
+  filter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+};
+
+function getFiltered() {
+  return ideas.filter(d => {
+    if (filter === 'all') return true;
+    if (filter === 'liked') return d.liked;
+    if (filter === 'done') return d.done;
+    if (filter === 'nodone') return !d.done;
+    return d.cat === filter;
+  });
+}
+
+function buildCard(d) {
+  const m = catMeta[d.cat] || catMeta.active;
+  const stars = [1,2,3,4,5].map(n =>
+    `<span class="star ${n <= (d.rating||0) ? 'on' : ''}" onclick="setRating('${d.id}',${n})">★</span>`
+  ).join('');
+  const ymap = d.addr ? 'https://yandex.ru/maps/?text=' + encodeURIComponent(d.addr) : '';
+
+  const doneBlock = d.done ? `
+    <div class="done-section">
+      <div class="stars-wrap">${stars}</div>
+      <textarea class="review-ta" id="rev-${d.id}" placeholder="Впечатления от свидания..." onblur="saveReview('${d.id}')">${d.review || ''}</textarea>
+      <div class="date-row">
+        <label>📅 Дата:</label>
+        <input type="date" value="${d.date || ''}" onchange="saveDate('${d.id}', this.value)">
+        ${(d.times||0) > 1 ? `<span class="repeat-badge">×${d.times} раза</span>` : ''}
+      </div>
+    </div>` : '';
+
+  return `<div class="card ${d.liked ? 'liked' : ''} ${d.done ? 'done' : ''}" id="card-${d.id}">
+    <div class="card-img-wrap">
+      <div class="card-emoji">${m.emoji}</div>
+      ${d.img ? `<img class="card-img" src="${d.img}" alt="${d.title}" loading="lazy"
+        onload="this.classList.add('loaded')" onerror="this.remove()">` : ''}
+    </div>
+    <div class="card-body">
+      <div class="card-title">${d.title}</div>
+      <div class="card-meta">
+        <span class="card-cat ${m.cls}">${m.label}</span>
+        ${d.rating ? `<span class="rating-sm">★ ${d.rating}/5</span>` : ''}
+        ${d.done ? '<span class="done-tag">✓ были</span>' : ''}
+      </div>
+      <div class="card-desc">${d.desc || ''}</div>
+      <div class="card-actions">
+        <button class="btn ${d.liked ? 'like-on' : ''}" onclick="toggleLike('${d.id}')">
+          ${d.liked ? '❤️ Нравится' : '🤍 Лайк'}
+        </button>
+        <button class="btn ${d.done ? 'done-on' : ''}" onclick="toggleDone('${d.id}')">
+          ${d.done ? '✅ Были' : '○ Отметить'}
+        </button>
+        ${d.done ? `<button class="btn" onclick="doRepeat('${d.id}')">🔄 Ещё раз</button>` : ''}
+        ${ymap ? `<a class="btn btn-map" href="${ymap}" target="_blank">🗺 Карта</a>` : ''}
+        ${d.link ? `<a class="btn btn-site" href="${d.link}" target="_blank">🔗 Сайт</a>` : ''}
+      </div>
+    </div>
+    ${doneBlock}
+  </div>`;
+}
+
+function render() {
+  const filtered = getFiltered();
+  const grid = document.getElementById('cards-grid');
+  grid.innerHTML = filtered.length
+    ? filtered.map(buildCard).join('')
+    : '<div class="empty">Нет свиданий в этой категории 🤷‍♀️</div>';
+}
+
+window.toggleAdd = function() {
+  const f = document.getElementById('add-form');
+  f.style.display = f.style.display === 'block' ? 'none' : 'block';
+};
+
+window.addIdea = async function() {
+  const title = document.getElementById('n-title').value.trim();
+  if (!title) return;
+  const addr = document.getElementById('n-addr').value.trim();
+  const newId = String(Date.now());
+  const newIdea = {
+    id: newId,
+    title,
+    desc: document.getElementById('n-desc').value.trim(),
+    cat: document.getElementById('n-cat').value,
+    img: document.getElementById('n-img').value.trim(),
+    addr,
+    link: document.getElementById('n-link').value.trim(),
+    liked: false, done: false, date: '', rating: 0, review: '', times: 0,
+  };
+  setSyncStatus('syncing', 'Сохраняем...');
+  try {
+    await set(ref(db, 'ideas/' + newId), newIdea);
+    ['n-title','n-desc','n-img','n-addr','n-link'].forEach(id => document.getElementById(id).value = '');
+    toggleAdd();
+  } catch(e) {
+    setSyncStatus('error', 'Не удалось добавить');
+  }
+};
+
+</script>
+</body>
+</html>
