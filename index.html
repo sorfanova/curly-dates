@@ -2,392 +2,466 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Наши свидания 💕</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Кучерявые свидания</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;background:#fafafa;color:#1a1a1a;min-height:100vh}
-.app{max-width:1100px;margin:0 auto;padding:1.5rem 1rem 3rem}
-.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:12px}
-.header-title h1{font-size:22px;font-weight:600;color:#1a1a1a;display:flex;align-items:center;gap:8px}
-.header-title p{font-size:13px;color:#666;margin-top:3px}
-.sync-bar{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;background:#fff;border:1px solid #eee;margin-bottom:1.25rem;font-size:12px;color:#666;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.sync-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;transition:background .3s}
+:root{--black:#0f0f0f;--white:#fafaf8;--cream:#f4f1ec;--accent:#0f0f0f;--muted:#888;--border:rgba(15,15,15,.1);--card-radius:4px;--font-display:'Cormorant Garamond',serif;--font-body:'Geologica',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:var(--font-body);background:var(--white);color:var(--black);min-height:100vh}
+a{text-decoration:none;color:inherit}
+
+/* HEADER */
+.header{padding:20px 16px 0;max-width:800px;margin:0 auto}
+.header-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px}
+.site-title{font-family:var(--font-display);font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1}
+.site-sub{font-size:11px;color:var(--muted);letter-spacing:.04em;margin-bottom:16px;font-weight:300}
+.header-icons{display:flex;gap:16px;padding-top:4px}
+.header-icons a{color:var(--black);font-size:20px;opacity:.7;transition:opacity .2s}
+.header-icons a:hover{opacity:1}
+
+/* NUDGE */
+.nudge{margin:0 16px 16px;max-width:calc(800px - 32px);margin-left:auto;margin-right:auto;display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--cream);border-left:2px solid var(--black);font-size:12px;color:#555;font-weight:300;line-height:1.4;display:none}
+.nudge.show{display:flex}
+
+/* ADD BTN TOP */
+.add-top-wrap{padding:0 16px 16px;max-width:800px;margin:0 auto}
+.add-top-btn{display:flex;align-items:center;gap:8px;padding:11px 16px;background:var(--black);color:var(--white);font-family:var(--font-body);font-size:12px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer;width:100%;justify-content:center;transition:opacity .2s}
+.add-top-btn:hover{opacity:.85}
+
+/* FILTERS */
+.filters-wrap{padding:0 16px;max-width:800px;margin:0 auto;margin-bottom:3px}
+.filters{display:flex;gap:0;overflow-x:auto;border-bottom:1px solid var(--border)}
+.filters::-webkit-scrollbar{display:none}
+.fc{padding:10px 14px;border-bottom:2px solid transparent;background:transparent;color:var(--muted);font-size:11px;font-family:var(--font-body);white-space:nowrap;cursor:pointer;margin-bottom:-1px;letter-spacing:.04em;font-weight:400;border:none;border-bottom:2px solid transparent;transition:all .2s}
+.fc.on{color:var(--black);border-bottom-color:var(--black);font-weight:500}
+.fc:hover:not(.on){color:var(--black)}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;max-width:800px;margin:2px auto 0}
+@media(min-width:600px){.grid{grid-template-columns:1fr 1fr 1fr}}
+
+/* CARD */
+.card{position:relative;overflow:hidden;cursor:pointer;background:#e8e5e0;aspect-ratio:2/3}
+.card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.card:hover .card-img{transform:scale(1.03)}
+.card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6) 0%,rgba(0,0,0,.1) 55%,transparent 75%)}
+.card-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:52px}
+.card-heart{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.9);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;font-size:14px;transition:transform .15s}
+.card-heart:hover{transform:scale(1.1)}
+.card-heart.on{background:var(--black)}
+.card-heart.on i{color:#fff}
+.card-heart i{color:#999}
+.card-del{position:absolute;top:10px;left:10px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.75);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;font-size:12px;opacity:0;transition:opacity .2s}
+.card:hover .card-del{opacity:1}
+.card-del i{color:#666}
+.card-edit{position:absolute;top:44px;left:10px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.75);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;font-size:12px;opacity:0;transition:opacity .2s}
+.card:hover .card-edit{opacity:1}
+.card-edit i{color:#666}
+.card-info{position:absolute;bottom:0;left:0;right:0;padding:10px 10px 12px;z-index:1}
+.card-cat{font-size:9px;color:rgba(255,255,255,.6);letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;font-weight:400}
+.card-title{font-family:var(--font-display);font-size:16px;font-weight:500;color:#fff;line-height:1.2;margin-bottom:3px}
+.card-desc{font-size:10px;color:rgba(255,255,255,.7);line-height:1.4;font-weight:300}
+.card-done-badge{display:inline-block;font-size:9px;color:rgba(255,255,255,.85);background:rgba(255,255,255,.15);padding:2px 7px;margin-top:5px;letter-spacing:.06em;text-transform:uppercase}
+
+/* EMPTY */
+.empty{grid-column:1/-1;text-align:center;padding:3rem 1rem;color:var(--muted);font-size:13px;font-weight:300}
+
+/* ADD FORM BOTTOM */
+.add-bottom-wrap{padding:16px;max-width:800px;margin:0 auto}
+.add-bottom-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;cursor:pointer;width:100%;letter-spacing:.06em;transition:all .2s}
+.add-bottom-btn:hover{border-color:var(--black);color:var(--black)}
+
+/* MODAL OVERLAY */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;display:none;align-items:flex-end;justify-content:center}
+.modal-bg.show{display:flex}
+@media(min-width:600px){.modal-bg{align-items:center}}
+.modal{background:var(--white);width:100%;max-width:480px;padding:24px 20px;max-height:90vh;overflow-y:auto}
+.modal h3{font-family:var(--font-display);font-size:20px;font-weight:500;margin-bottom:20px}
+.form-row{margin-bottom:14px}
+.form-row label{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;font-weight:400}
+.form-row input,.form-row textarea,.form-row select{width:100%;font-size:13px;font-family:var(--font-body);padding:10px 12px;border:1px solid var(--border);background:var(--cream);color:var(--black);outline:none;transition:border-color .2s;border-radius:0;-webkit-appearance:none}
+.form-row input:focus,.form-row textarea:focus,.form-row select:focus{border-color:var(--black)}
+.form-row textarea{height:64px;resize:none}
+.form-btns{display:flex;gap:8px;margin-top:18px}
+.btn-save{flex:1;padding:12px;background:var(--black);color:var(--white);font-family:var(--font-body);font-size:12px;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer;transition:opacity .2s}
+.btn-save:hover{opacity:.85}
+.btn-cancel{padding:12px 20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;cursor:pointer}
+
+/* CONFIRM MODAL */
+.confirm-modal{background:var(--white);width:100%;max-width:360px;padding:24px 20px;margin:16px}
+.confirm-modal p{font-size:14px;color:var(--black);margin-bottom:20px;line-height:1.5;font-weight:300}
+.confirm-btns{display:flex;gap:8px}
+.btn-confirm-del{flex:1;padding:11px;background:var(--black);color:var(--white);font-family:var(--font-body);font-size:12px;border:none;cursor:pointer;letter-spacing:.06em}
+.btn-confirm-cancel{flex:1;padding:11px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;cursor:pointer}
+
+/* SYNC */
+.sync-bar{padding:6px 16px;max-width:800px;margin:0 auto 8px;display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);letter-spacing:.04em}
+.sync-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;flex-shrink:0}
 .sync-dot.syncing{background:#f59e0b;animation:pulse 1s infinite}
 .sync-dot.error{background:#ef4444}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
-.filter-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem}
-.filter-btn{padding:6px 14px;border-radius:20px;border:1px solid #e5e5e5;background:#fff;color:#555;font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;transition:all .15s}
-.filter-btn.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
-.filter-btn:hover:not(.active){background:#f5f5f5}
-.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
-.card{background:#fff;border:1px solid #eee;border-radius:14px;overflow:hidden;transition:box-shadow .2s,border-color .2s;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);border-color:#ddd}
-.card.liked{border-left:3px solid #f43f5e}
-.card.done{border-left:3px solid #22c55e}
-.card-img-wrap{position:relative;width:100%;height:170px;background:#f3f4f6;overflow:hidden}
-.card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
-.card-img.loaded{opacity:1}
-.card-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:48px}
-.card-body{padding:1rem}
-.card-title{font-size:14px;font-weight:600;color:#1a1a1a;line-height:1.35;margin-bottom:5px}
-.card-meta{display:flex;align-items:center;gap:7px;margin-bottom:7px;flex-wrap:wrap}
-.card-cat{font-size:11px;padding:2px 8px;border-radius:20px;white-space:nowrap;font-weight:500}
-.cat-active{background:#fdf2f8;color:#9d174d}
-.cat-trip{background:#eff6ff;color:#1e40af}
-.cat-food{background:#fffbeb;color:#92400e}
-.cat-sport{background:#f0fdf4;color:#166534}
-.cat-culture{background:#f5f3ff;color:#5b21b6}
-.cat-spa{background:#ecfdf5;color:#065f46}
-.rating-sm{font-size:12px;color:#f59e0b;font-weight:500}
-.done-tag{font-size:11px;color:#16a34a;font-weight:500}
-.card-desc{font-size:12px;color:#666;margin-bottom:12px;line-height:1.55}
-.card-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:4px;padding:5px 10px;border-radius:8px;border:1px solid #e5e5e5;background:#fff;color:#555;font-size:11px;font-family:'Inter',sans-serif;cursor:pointer;transition:all .15s;font-weight:500}
-.btn:hover{background:#f5f5f5}
-.btn.like-on{color:#f43f5e;border-color:#fda4af;background:#fff1f2}
-.btn.done-on{color:#16a34a;border-color:#86efac;background:#f0fdf4}
-.btn-map{border-color:#bfdbfe;background:#eff6ff;color:#1d4ed8}
-.btn-map:hover{background:#dbeafe}
-.btn-site{border-color:#fde68a;background:#fffbeb;color:#92400e}
-.btn-site:hover{background:#fef3c7}
-.done-section{padding:.875rem 1rem;border-top:1px solid #f3f4f6;background:#fafafa}
-.stars-wrap{display:flex;gap:3px;margin-bottom:8px}
-.star{font-size:22px;cursor:pointer;color:#d1d5db;transition:color .1s;line-height:1;user-select:none}
-.star.on{color:#f59e0b}
-.review-ta{width:100%;font-size:12px;padding:7px 10px;border-radius:8px;border:1px solid #e5e5e5;background:#fff;color:#1a1a1a;resize:none;height:54px;font-family:'Inter',sans-serif;transition:border-color .15s}
-.review-ta:focus{outline:none;border-color:#a3a3a3}
-.date-row{display:flex;align-items:center;gap:8px;margin-top:8px}
-.date-row label{font-size:11px;color:#888}
-.date-row input[type=date]{font-size:11px;padding:4px 8px;border-radius:8px;border:1px solid #e5e5e5;background:#fff;color:#1a1a1a;font-family:'Inter',sans-serif}
-.repeat-badge{font-size:11px;padding:2px 8px;background:#f0fdf4;color:#16a34a;border-radius:20px;font-weight:500;margin-left:auto}
-.divider{height:1px;background:#f0f0f0;margin:2rem 0 1rem}
-.add-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:12px;border:1.5px dashed #d1d5db;background:transparent;color:#888;font-size:13px;font-family:'Inter',sans-serif;cursor:pointer;width:100%;transition:all .15s}
-.add-btn:hover{background:#f9fafb;color:#555;border-color:#9ca3af}
-.add-form{background:#fff;border-radius:14px;border:1px solid #eee;padding:1.25rem;margin-top:12px;display:none;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-.add-form h3{font-size:14px;font-weight:600;margin-bottom:1rem;color:#1a1a1a}
-.form-row{margin-bottom:10px}
-.form-row label{display:block;font-size:11px;font-weight:500;color:#666;margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
-.form-row input,.form-row textarea,.form-row select{width:100%;font-size:13px;font-family:'Inter',sans-serif;padding:8px 10px;border-radius:8px;border:1px solid #e5e5e5;color:#1a1a1a;background:#fafafa;transition:border-color .15s}
-.form-row input:focus,.form-row textarea:focus,.form-row select:focus{outline:none;border-color:#a3a3a3;background:#fff}
-.form-btns{display:flex;gap:8px;margin-top:12px}
-.btn-primary{padding:8px 18px;border-radius:8px;border:none;background:#1a1a1a;color:#fff;font-size:13px;font-family:'Inter',sans-serif;cursor:pointer;font-weight:500;transition:background .15s}
-.btn-primary:hover{background:#333}
-.btn-cancel{padding:8px 14px;border-radius:8px;border:1px solid #e5e5e5;background:#fff;color:#666;font-size:13px;font-family:'Inter',sans-serif;cursor:pointer}
-.empty{text-align:center;padding:3rem 1rem;color:#888;font-size:14px}
-.map-all-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;border:1px solid #e5e5e5;background:#fff;color:#1a1a1a;font-size:12px;font-weight:500;font-family:'Inter',sans-serif;text-decoration:none;cursor:pointer;transition:all .15s;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.map-all-btn:hover{background:#f5f5f5}
-@media(max-width:600px){
-  .cards-grid{grid-template-columns:1fr}
-  .header{flex-direction:column;align-items:flex-start}
-}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* HISTORY PREVIEW */
+.hist-preview{max-width:800px;margin:0 auto;padding:24px 16px 0;border-top:1px solid var(--border)}
+.hist-preview-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.hist-preview-head span{font-family:var(--font-display);font-size:18px;font-weight:500}
+.hist-preview-head a{font-size:11px;color:var(--muted);letter-spacing:.04em;display:flex;align-items:center;gap:3px}
+.hist-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.hist-item:last-child{border-bottom:none}
+.hist-thumb{width:48px;height:60px;object-fit:cover;flex-shrink:0;background:var(--cream)}
+.hist-thumb-ph{width:48px;height:60px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.hist-body{}
+.hist-title{font-size:13px;font-weight:500;color:var(--black);margin-bottom:2px}
+.hist-date{font-size:10px;color:var(--muted);letter-spacing:.04em;margin-bottom:3px}
+.hist-stars{font-size:12px;color:var(--black);letter-spacing:-1px;margin-bottom:2px}
+.hist-review{font-size:11px;color:var(--muted);line-height:1.4;font-weight:300}
 </style>
 </head>
 <body>
-<div class="app">
-  <div class="header">
-    <div class="header-title">
-      <h1>💕 Наши свидания</h1>
-      <p>Общий список — изменения видны обоим в реальном времени</p>
-    </div>
-    <a class="map-all-btn" id="all-map-btn" href="https://yandex.ru/maps/?text=рестораны+Москва" target="_blank">
-      🗺 Все на карте
-    </a>
-  </div>
 
-  <div class="sync-bar">
-    <div class="sync-dot syncing" id="sync-dot"></div>
-    <span id="sync-text">Подключаемся к Firebase...</span>
-  </div>
-
-  <div class="filter-bar">
-    <button class="filter-btn active" onclick="setFilter('all',this)">Все</button>
-    <button class="filter-btn" onclick="setFilter('liked',this)">❤️ Нравится</button>
-    <button class="filter-btn" onclick="setFilter('done',this)">✅ Были</button>
-    <button class="filter-btn" onclick="setFilter('nodone',this)">📋 Ещё не были</button>
-    <button class="filter-btn" onclick="setFilter('trip',this)">✈️ Поездки</button>
-    <button class="filter-btn" onclick="setFilter('sport',this)">⚡ Спорт</button>
-    <button class="filter-btn" onclick="setFilter('food',this)">🍽️ Рестораны</button>
-    <button class="filter-btn" onclick="setFilter('spa',this)">🛁 Спа</button>
-    <button class="filter-btn" onclick="setFilter('culture',this)">🎭 Культура</button>
-    <button class="filter-btn" onclick="setFilter('active',this)">🎯 Активное</button>
-  </div>
-
-  <div class="cards-grid" id="cards-grid">
-    <div class="empty">Загрузка...</div>
-  </div>
-
-  <div class="divider"></div>
-  <button class="add-btn" onclick="toggleAdd()">+ Добавить свою идею</button>
-  <div class="add-form" id="add-form">
-    <h3>Новая идея</h3>
-    <div class="form-row">
-      <label>Название</label>
-      <input type="text" id="n-title" placeholder="Название свидания">
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="site-title">Кучерявые свидания</div>
+      <div class="site-sub">Чтобы нам было легко, просто и с любовью</div>
     </div>
-    <div class="form-row">
-      <label>Описание</label>
-      <textarea id="n-desc" style="height:60px" placeholder="Пара слов о формате..."></textarea>
-    </div>
-    <div class="form-row">
-      <label>Категория</label>
-      <select id="n-cat">
-        <option value="active">🎯 Активное</option>
-        <option value="trip">✈️ Поездка</option>
-        <option value="food">🍽️ Ресторан</option>
-        <option value="sport">⚡ Спорт</option>
-        <option value="culture">🎭 Культура</option>
-        <option value="spa">🛁 Спа / Релакс</option>
-      </select>
-    </div>
-    <div class="form-row">
-      <label>Ссылка на фото (прямой URL .jpg / .png)</label>
-      <input type="text" id="n-img" placeholder="https://...">
-    </div>
-    <div class="form-row">
-      <label>Адрес для Яндекс Карт</label>
-      <input type="text" id="n-addr" placeholder="Москва, ул. ...">
-    </div>
-    <div class="form-row">
-      <label>Сайт (необязательно)</label>
-      <input type="text" id="n-link" placeholder="https://...">
-    </div>
-    <div class="form-btns">
-      <button class="btn-primary" onclick="addIdea()">Добавить</button>
-      <button class="btn-cancel" onclick="toggleAdd()">Отмена</button>
+    <div class="header-icons">
+      <a href="history.html" title="История">&#128336;</a>
+      <a href="deleted.html" title="Удалённые">&#128465;</a>
     </div>
   </div>
 </div>
 
-<!-- Firebase -->
+<div class="sync-bar">
+  <div class="sync-dot syncing" id="sync-dot"></div>
+  <span id="sync-text">Подключаемся...</span>
+</div>
+
+<div class="nudge" id="nudge">
+  <span id="nudge-text"></span>
+</div>
+
+<div class="add-top-wrap">
+  <button class="add-top-btn" onclick="openAddModal()">+ Добавить идею</button>
+</div>
+
+<div class="filters-wrap">
+  <div class="filters" id="filters">
+    <button class="fc on" onclick="setFilter('all',this)">Все</button>
+    <button class="fc" onclick="setFilter('liked',this)">Нравится</button>
+    <button class="fc" onclick="setFilter('trip',this)">Поездки</button>
+    <button class="fc" onclick="setFilter('sport',this)">Спорт</button>
+    <button class="fc" onclick="setFilter('food',this)">Рестораны</button>
+    <button class="fc" onclick="setFilter('spa',this)">Спа</button>
+    <button class="fc" onclick="setFilter('culture',this)">Культура</button>
+    <button class="fc" onclick="setFilter('active',this)">Активное</button>
+  </div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="add-bottom-wrap">
+  <button class="add-bottom-btn" onclick="openAddModal()">+ Добавить свою идею</button>
+</div>
+
+<div class="hist-preview" id="hist-preview" style="display:none">
+  <div class="hist-preview-head">
+    <span>История свиданий</span>
+    <a href="history.html">Все →</a>
+  </div>
+  <div id="hist-list"></div>
+</div>
+
+<!-- ADD/EDIT MODAL -->
+<div class="modal-bg" id="add-modal">
+  <div class="modal">
+    <h3 id="modal-title">Новая идея</h3>
+    <input type="hidden" id="edit-id">
+    <div class="form-row"><label>Название</label><input type="text" id="f-title" placeholder="Название свидания"></div>
+    <div class="form-row"><label>Описание</label><textarea id="f-desc" placeholder="Пара слов о формате..."></textarea></div>
+    <div class="form-row"><label>Категория</label>
+      <select id="f-cat">
+        <option value="active">Активное</option>
+        <option value="trip">Поездка</option>
+        <option value="food">Ресторан</option>
+        <option value="sport">Спорт</option>
+        <option value="culture">Культура</option>
+        <option value="spa">Спа / Релакс</option>
+      </select>
+    </div>
+    <div class="form-row"><label>Ссылка на фото (URL)</label><input type="text" id="f-img" placeholder="https://..."></div>
+    <div class="form-row"><label>Адрес</label><input type="text" id="f-addr" placeholder="Москва, ул. ..."></div>
+    <div class="form-row"><label>Сайт</label><input type="text" id="f-link" placeholder="https://..."></div>
+    <div class="form-btns">
+      <button class="btn-save" onclick="saveIdea()">Сохранить</button>
+      <button class="btn-cancel" onclick="closeModal()">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DELETE MODAL -->
+<div class="modal-bg" id="confirm-modal">
+  <div class="confirm-modal">
+    <p>Удалить эту идею? Она попадёт в список удалённых.</p>
+    <div class="confirm-btns">
+      <button class="btn-confirm-del" onclick="confirmDelete()">Удалить</button>
+      <button class="btn-confirm-cancel" onclick="closeConfirm()">Отмена</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, set, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-const firebaseConfig = {
-  databaseURL: "https://curly-dates-default-rtdb.europe-west1.firebasedatabase.app/"
-};
-const app = initializeApp(firebaseConfig);
+const app = initializeApp({ databaseURL: "https://curly-dates-default-rtdb.europe-west1.firebasedatabase.app/" });
 const db = getDatabase(app);
-const ideasRef = ref(db, 'ideas');
-
-window._db = db;
-window._ref = ref;
-window._set = set;
-window._update = update;
-window._ideasRef = ideasRef;
 
 const catMeta = {
-  active:  { label:'Активное',  cls:'cat-active',  emoji:'🎯' },
-  trip:    { label:'Поездка',   cls:'cat-trip',    emoji:'✈️' },
-  food:    { label:'Ресторан',  cls:'cat-food',    emoji:'🍽️' },
-  sport:   { label:'Спорт',     cls:'cat-sport',   emoji:'⚡' },
-  culture: { label:'Культура',  cls:'cat-culture', emoji:'🎭' },
-  spa:     { label:'Спа',       cls:'cat-spa',     emoji:'🛁' },
+  active:  {label:'Активное', emoji:'🎯'},
+  trip:    {label:'Поездка',  emoji:'✈️'},
+  food:    {label:'Ресторан', emoji:'🍽️'},
+  sport:   {label:'Спорт',    emoji:'⚡'},
+  culture: {label:'Культура', emoji:'🎭'},
+  spa:     {label:'Спа',      emoji:'🛁'},
 };
 
 const SEED = [
-  {id:'1',  title:'Гольф-симулятор CityGolf',      cat:'sport',   desc:'Аминьевское ш., 6. Новые симуляторы, ресторан, Golfmarket. Рейтинг 4.6.',              addr:'Москва, Аминьевское шоссе, 6',       link:'https://citygolf.ru',                         img:'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
-  {id:'2',  title:'Спа с сауной и массажем',        cat:'spa',     desc:'Частная баня на двоих — сауна, хороший массаж. Подборка @svalika_wellbeing.',            addr:'Москва',                             link:'https://www.instagram.com/p/DYSPIP8DaTf/', img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80',  liked:true, done:false,date:'',rating:0,review:'',times:0},
-  {id:'3',  title:'Катер без прав — Строгино',      cat:'active',  desc:'Управляешь сам, права не нужны. Строгино — Серебряный бор.',                            addr:'Москва, Строгино, яхт-клуб Медуза',  link:'https://thelodka.ru',                         img:'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
-  {id:'4',  title:'Бурлеск-кабаре Гримёрка',       cat:'culture', desc:'Пушечная, 9/6. «Мадам Бум» — джаз, блёстки, варьете 20-х. 18+.',                        addr:'Москва, Пушечная улица, 9/6',        link:'https://grimerka.art/madamboom',               img:'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
-  {id:'5',  title:'Ресторан ИКРА',                  cat:'food',    desc:'Большая Никитская, 5. Chef\'s table на 16 мест, сеты от Мухина и топ-шефов WRF.',        addr:'Москва, Большая Никитская, 5',       link:'',                                            img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80',  liked:true, done:true, date:'',rating:4,review:'',times:1},
-  {id:'6',  title:'Ресторан AYU',                   cat:'food',    desc:'Романов пер., 2. Омакасэ 22 подачи, 300-летний кипарис хиноки, всего 12 мест.',          addr:'Москва, Романов переулок, 2',        link:'',                                            img:'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&q=80',  liked:true, done:true, date:'',rating:5,review:'',times:1},
-  {id:'7',  title:'Ресторан Olluco',                cat:'food',    desc:'Даев пер., 19. Перуанская кухня от #1 в мире Вирхилио Мартинеса. Рейтинг 4.5.',          addr:'Москва, Даев переулок, 19',          link:'',                                            img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80',  liked:true, done:true, date:'',rating:4,review:'',times:0},
-  {id:'8',  title:'Планетарий — вечер под куполом', cat:'culture', desc:'Садовая-Кудринская, 5. Программа «Только для вас» + Парк неба + Большая обсерватория.',   addr:'Москва, Садовая-Кудринская, 5',      link:'https://planetarium-moscow.ru',               img:'https://images.unsplash.com/photo-1532798369041-b33eb576ef16?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
-  {id:'9',  title:'Винная дегустация',              cat:'food',    desc:'Слепая дегустация у сомелье — интереснее любого ресторана.',                             addr:'Москва',                             link:'',                                            img:'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
-  {id:'10', title:'Матч: футбол / хоккей / теннис', cat:'sport',   desc:'Лужники, ВТБ Арена — атмосфера живого матча не сравнима с телевизором.',                 addr:'Москва, стадион Лужники',            link:'https://tickets.spartakmoscow.ru',             img:'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
-  {id:'11', title:'Поездка в Казань',               cat:'trip',    desc:'Отель с выходом прямо на стадион — viral-рилс. 800 км, долететь 1 час.',                  addr:'Казань, стадион Ак Барс Арена',      link:'https://www.instagram.com/reel/DX4qLTuRmEg/',img:'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80',  liked:true, done:false,date:'',rating:0,review:'',times:0},
-  {id:'12', title:'Moscow Raceway — гонки',         cat:'sport',   desc:'Шелудьково, Подмосковье. Один из лучших треков России. Рейтинг 4.8.',                     addr:'Шелудьково, Московская область',     link:'https://moscowraceway.ru',                    img:'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
-  {id:'13', title:'Вертолётный тур над Москвой',    cat:'active',  desc:'30–40 минут над Кремлём, рекой и Сити. Незабываемо — как раз ваш формат.',               addr:'Москва',                             link:'',                                            img:'https://images.unsplash.com/photo-1534481016308-0fca71578ae5?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
-  {id:'14', title:'Ужин на крыше / панорамный',     cat:'food',    desc:'Sixty, Babel или закрытые roof-вечера. Вид на Москву + хорошая кухня.',                   addr:'Москва, Москва-Сити',                link:'',                                            img:'https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
-  {id:'15', title:'Стрельба из лука / тир',         cat:'active',  desc:'Archery-клуб или закрытый тир — новый опыт вдвоём, азартно, не банально.',               addr:'Москва',                             link:'',                                            img:'https://images.unsplash.com/photo-1569517282132-25d22f4573e6?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
-  {id:'16', title:'Яхта или SUP на закате',         cat:'active',  desc:'Яхта с капитаном или SUP-доски по вечернему Строгино.',                                   addr:'Москва, Строгино',                   link:'',                                            img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
-  {id:'17', title:'Иммерсивный театр',              cat:'culture', desc:'«Чёрная курица» или DetectivePro — история + живые актёры + загадки.',                    addr:'Москва',                             link:'',                                            img:'https://images.unsplash.com/photo-1503095396549-807759245b35?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
-  {id:'18', title:'SPA-выходные — Foresta',         cat:'trip',    desc:'Foresta Festival Park — термы, баня, лес, коттеджи. Час от Москвы. Рейтинг 4.2.',         addr:'Прохорово, Подмосковье',             link:'https://foresta.su',                          img:'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
-  {id:'19', title:'Конный выезд или параплан',      cat:'active',  desc:'Конная прогулка в Подмосковье или тандем на параплане с инструктором.',                   addr:'Подмосковье',                        link:'',                                            img:'https://images.unsplash.com/photo-1553284966-19b8815c7817?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
-  {id:'20', title:'Кино в Пионере',                 cat:'culture', desc:'Кутузовский, 21. Авторское кино, фестивальные хиты, коктейль-бар. Рейтинг 4.8.',          addr:'Москва, Кутузовский проспект, 21',   link:'https://pioner-cinema.ru',                    img:'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&q=80',  liked:false,done:false,date:'',rating:0,review:'',times:0},
+  {id:'1',  title:'Гольф-симулятор CityGolf',      cat:'sport',   desc:'Аминьевское ш., 6. Новые симуляторы, ресторан, Golfmarket. Рейтинг 4.6.',              addr:'Москва, Аминьевское шоссе, 6',       lat:55.706,lon:37.457,link:'https://citygolf.ru',img:'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'2',  title:'Спа с сауной и массажем',        cat:'spa',     desc:'Частная баня на двоих — сауна, хороший массаж. Подборка @svalika_wellbeing.',            addr:'Москва',                             lat:55.749,lon:37.539,link:'https://www.instagram.com/p/DYSPIP8DaTf/',img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80',liked:true,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'3',  title:'Катер без прав — Строгино',      cat:'active',  desc:'Управляешь сам, права не нужны. Маршрут вдоль Серебряного бора.',                       addr:'Москва, Строгино, яхт-клуб Медуза', lat:55.789,lon:37.408,link:'https://thelodka.ru',img:'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'4',  title:'Бурлеск-кабаре Гримёрка',       cat:'culture', desc:'Пушечная, 9/6. Шоу «Мадам Бум» — живой джаз, блёстки, варьете 20-х. 18+.',             addr:'Москва, Пушечная улица, 9/6',       lat:55.757,lon:37.620,link:'https://grimerka.art/madamboom',img:'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'5',  title:'Ресторан ИКРА',                  cat:'food',    desc:'Большая Никитская, 5. Chef\'s table на 16 мест, сеты от Мухина и топ-шефов WRF.',        addr:'Москва, Большая Никитская, 5',      lat:55.755,lon:37.608,link:'',img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80',liked:true,done:true,date:'2025-04-10',rating:4,review:'Очень атмосферно, сеты интересные.',times:1,deleted:false},
+  {id:'6',  title:'Ресторан AYU',                   cat:'food',    desc:'Романов пер., 2. Омакасэ 22 подачи, 300-летний кипарис хиноки, всего 12 мест.',          addr:'Москва, Романов переулок, 2',       lat:55.754,lon:37.608,link:'',img:'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&q=80',liked:true,done:true,date:'2025-05-12',rating:5,review:'Лучший омакасэ в Москве. Обязательно повторим.',times:1,deleted:false},
+  {id:'7',  title:'Ресторан Olluco',                cat:'food',    desc:'Даев пер., 19. Перуанская кухня от #1 в мире Вирхилио Мартинеса. Рейтинг 4.5.',          addr:'Москва, Даев переулок, 19',         lat:55.770,lon:37.638,link:'',img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80',liked:true,done:true,date:'2025-03-05',rating:4,review:'Интересно, необычно. Порции маловаты.',times:0,deleted:false},
+  {id:'8',  title:'Планетарий — вечер под куполом', cat:'culture', desc:'Садовая-Кудринская, 5. Программа «Только для вас» + Парк неба + Большая обсерватория.',   addr:'Москва, Садовая-Кудринская, 5',     lat:55.761,lon:37.583,link:'https://planetarium-moscow.ru',img:'https://images.unsplash.com/photo-1532798369041-b33eb576ef16?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'9',  title:'Винная дегустация',              cat:'food',    desc:'Слепая дегустация у сомелье или в Wine & Corks — интереснее любого ресторана.',           addr:'Москва',                             lat:55.760,lon:37.597,link:'',img:'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'10', title:'Матч: футбол / хоккей / теннис', cat:'sport',   desc:'Лужники, ВТБ Арена — атмосфера живого матча не сравнима с телевизором.',                  addr:'Москва, стадион Лужники',           lat:55.715,lon:37.556,link:'https://tickets.spartakmoscow.ru',img:'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'11', title:'Поездка в Казань',               cat:'trip',    desc:'Отель с панорамным выходом прямо на стадион — viral-рилс. Долететь 1 час.',               addr:'Казань, стадион Ак Барс Арена',     lat:55.800,lon:49.145,link:'https://www.instagram.com/reel/DX4qLTuRmEg/',img:'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80',liked:true,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'12', title:'Moscow Raceway — гонки',         cat:'sport',   desc:'Шелудьково, Подмосковье. Один из лучших треков России. Рейтинг 4.8.',                     addr:'Шелудьково, Московская область',    lat:55.996,lon:36.270,link:'https://moscowraceway.ru',img:'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'13', title:'Вертолётный тур над Москвой',    cat:'active',  desc:'30–40 минут над Кремлём, рекой и Сити. Незабываемо — как раз ваш формат.',               addr:'Москва, Ходынское поле',            lat:55.790,lon:37.560,link:'',img:'https://images.unsplash.com/photo-1534481016308-0fca71578ae5?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'14', title:'Ужин на крыше / панорамный',     cat:'food',    desc:'Sixty, Babel или закрытые roof-вечера. Вид на всю Москву + хорошая кухня.',               addr:'Москва, Пресненская набережная, 8', lat:55.748,lon:37.540,link:'',img:'https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'15', title:'Стрельба из лука / тир',         cat:'active',  desc:'Archery-клуб или закрытый тир — новый опыт вдвоём, азартно, не банально.',               addr:'Москва',                             lat:55.657,lon:37.620,link:'',img:'https://images.unsplash.com/photo-1569517282132-25d22f4573e6?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'16', title:'Яхта или SUP на закате',         cat:'active',  desc:'Яхта с капитаном или SUP-доски по вечернему Строгино. Закат на воде.',                    addr:'Москва, Строгино',                  lat:55.792,lon:37.402,link:'',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'17', title:'Иммерсивный театр',              cat:'culture', desc:'«Чёрная курица» или DetectivePro — история + живые актёры + загадки. Не комната-квест.',  addr:'Москва',                             lat:55.759,lon:37.645,link:'',img:'https://images.unsplash.com/photo-1503095396549-807759245b35?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'18', title:'SPA-выходные — Foresta',         cat:'trip',    desc:'Foresta Festival Park — термы, баня, лес, коттеджи. Час от Москвы. Рейтинг 4.2.',         addr:'Прохорово, Подмосковье',            lat:55.305,lon:37.631,link:'https://foresta.su',img:'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'19', title:'Конный выезд или параплан',      cat:'active',  desc:'Конная прогулка в Подмосковье или тандем на параплане с инструктором — адреналин и природа.',addr:'Подмосковье, Алабино',             lat:55.600,lon:37.080,link:'',img:'https://images.unsplash.com/photo-1553284966-19b8815c7817?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'20', title:'Кино в Пионере',                 cat:'culture', desc:'Кутузовский, 21. Авторское кино, фестивальные хиты, коктейль-бар. Рейтинг 4.8.',          addr:'Москва, Кутузовский проспект, 21',  lat:55.745,lon:37.549,link:'https://pioner-cinema.ru',img:'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&q=80',liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false},
 ];
 
 let ideas = [];
 let filter = 'all';
+let pendingDeleteId = null;
 let initialized = false;
 
-function setSyncStatus(status, text) {
-  const dot = document.getElementById('sync-dot');
-  const label = document.getElementById('sync-text');
-  dot.className = 'sync-dot' + (status === 'syncing' ? ' syncing' : status === 'error' ? ' error' : '');
-  label.textContent = text;
+// Read filter from URL
+const urlParams = new URLSearchParams(window.location.search);
+const urlFilter = urlParams.get('filter');
+if (urlFilter) {
+  filter = urlFilter;
+  document.querySelectorAll('.fc').forEach(b => {
+    b.classList.remove('on');
+    if (b.getAttribute('onclick').includes(`'${urlFilter}'`)) b.classList.add('on');
+  });
 }
 
-// Listen to Firebase in real-time
-onValue(ideasRef, (snapshot) => {
-  const data = snapshot.val();
+function setSyncStatus(s, t) {
+  document.getElementById('sync-dot').className = 'sync-dot' + (s==='syncing'?' syncing':s==='error'?' error':'');
+  document.getElementById('sync-text').textContent = t;
+}
+
+// Firebase
+const { initializeApp: _ia } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
+const { getDatabase: _gd, ref: _ref, set: _set, onValue: _ov, update: _upd, remove: _rem } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js");
+
+const ideasRef = ref(db, 'ideas');
+
+onValue(ideasRef, snap => {
+  const data = snap.val();
   if (data) {
-    ideas = Object.values(data).sort((a, b) => Number(a.id) - Number(b.id));
-    setSyncStatus('ok', 'Синхронизировано · ' + new Date().toLocaleTimeString('ru', {hour:'2-digit', minute:'2-digit'}));
+    ideas = Object.values(data).sort((a,b) => Number(a.id)-Number(b.id));
+    setSyncStatus('ok', 'Синхронизировано · ' + new Date().toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'}));
   } else if (!initialized) {
-    // First launch — write seed data
-    const seedObj = {};
-    SEED.forEach(item => { seedObj[item.id] = item; });
-    set(ideasRef, seedObj).then(() => {
-      setSyncStatus('ok', 'База создана — данные общие для вас двоих ❤️');
-    });
+    const obj = {};
+    SEED.forEach(s => obj[s.id] = s);
+    set(ideasRef, obj);
   }
   initialized = true;
   render();
-}, (error) => {
-  setSyncStatus('error', 'Ошибка подключения — ' + error.message);
-});
+  renderHistPreview();
+  checkNudge();
+}, err => setSyncStatus('error', err.message));
 
-async function patchIdea(id, patch) {
-  setSyncStatus('syncing', 'Сохраняем...');
-  try {
-    await update(ref(db, 'ideas/' + id), patch);
-  } catch(e) {
-    setSyncStatus('error', 'Не удалось сохранить');
-  }
+async function patch(id, data) {
+  setSyncStatus('syncing','Сохраняем...');
+  await update(ref(db,'ideas/'+id), data);
 }
-
-window.toggleLike = async function(id) {
-  const d = ideas.find(x => x.id === id);
-  if (!d) return;
-  await patchIdea(id, { liked: !d.liked });
-};
-
-window.toggleDone = async function(id) {
-  const d = ideas.find(x => x.id === id);
-  if (!d) return;
-  const newDone = !d.done;
-  const newTimes = newDone ? (d.times || 0) + 1 : Math.max(0, (d.times || 1) - 1);
-  await patchIdea(id, { done: newDone, times: newTimes });
-};
-
-window.doRepeat = async function(id) {
-  const d = ideas.find(x => x.id === id);
-  if (!d) return;
-  await patchIdea(id, { times: (d.times || 1) + 1 });
-};
-
-window.setRating = async function(id, r) {
-  await patchIdea(id, { rating: r });
-};
-
-window.saveReview = async function(id) {
-  const ta = document.getElementById('rev-' + id);
-  if (!ta) return;
-  await patchIdea(id, { review: ta.value });
-};
-
-window.saveDate = async function(id, val) {
-  await patchIdea(id, { date: val });
-};
-
-window.setFilter = function(f, btn) {
-  filter = f;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  render();
-};
 
 function getFiltered() {
   return ideas.filter(d => {
+    if (d.deleted) return false;
+    if (d.done && d.times <= 1 && d.done) {
+      // hide done items unless times > 1 (repeated) or filter is 'done'
+      if (filter !== 'done' && d.times === 1) return false;
+    }
     if (filter === 'all') return true;
     if (filter === 'liked') return d.liked;
     if (filter === 'done') return d.done;
-    if (filter === 'nodone') return !d.done;
     return d.cat === filter;
   });
 }
 
+function checkNudge() {
+  const done = ideas.filter(d => d.done && d.date && !d.deleted);
+  if (!done.length) return;
+  const latest = done.sort((a,b) => new Date(b.date)-new Date(a.date))[0];
+  const days = Math.floor((Date.now() - new Date(latest.date)) / 86400000);
+  const nudge = document.getElementById('nudge');
+  if (days >= 14) {
+    document.getElementById('nudge-text').textContent = `Мы были на свидании ${days} ${days===1?'день':days<5?'дня':'дней'} назад — пора запланировать что-то приятное`;
+    nudge.classList.add('show');
+  }
+}
+
 function buildCard(d) {
-  const m = catMeta[d.cat] || catMeta.active;
-  const stars = [1,2,3,4,5].map(n =>
-    `<span class="star ${n <= (d.rating||0) ? 'on' : ''}" onclick="setRating('${d.id}',${n})">★</span>`
-  ).join('');
-  const ymap = d.addr ? 'https://yandex.ru/maps/?text=' + encodeURIComponent(d.addr) : '';
-
-  const doneBlock = d.done ? `
-    <div class="done-section">
-      <div class="stars-wrap">${stars}</div>
-      <textarea class="review-ta" id="rev-${d.id}" placeholder="Впечатления от свидания..." onblur="saveReview('${d.id}')">${d.review || ''}</textarea>
-      <div class="date-row">
-        <label>📅 Дата:</label>
-        <input type="date" value="${d.date || ''}" onchange="saveDate('${d.id}', this.value)">
-        ${(d.times||0) > 1 ? `<span class="repeat-badge">×${d.times} раза</span>` : ''}
-      </div>
-    </div>` : '';
-
-  return `<div class="card ${d.liked ? 'liked' : ''} ${d.done ? 'done' : ''}" id="card-${d.id}">
-    <div class="card-img-wrap">
-      <div class="card-emoji">${m.emoji}</div>
-      ${d.img ? `<img class="card-img" src="${d.img}" alt="${d.title}" loading="lazy"
-        onload="this.classList.add('loaded')" onerror="this.remove()">` : ''}
-    </div>
-    <div class="card-body">
+  const m = catMeta[d.cat]||catMeta.active;
+  const ymap = d.addr ? `https://yandex.ru/maps/?text=${encodeURIComponent(d.addr)}` : '';
+  return `<div class="card" onclick="goIdea('${d.id}')">
+    ${d.img ? `<img class="card-img" src="${d.img}" alt="${d.title}" loading="lazy" onerror="this.remove()">` : `<div class="card-emoji">${m.emoji}</div>`}
+    <div class="card-overlay"></div>
+    <button class="card-heart ${d.liked?'on':''}" onclick="event.stopPropagation();toggleLike('${d.id}')">
+      <i class="ti ti-heart${d.liked?'-filled':''}" aria-hidden="true"></i>
+    </button>
+    <button class="card-del" onclick="event.stopPropagation();askDelete('${d.id}')" title="Удалить">
+      <i class="ti ti-trash" aria-hidden="true"></i>
+    </button>
+    <button class="card-edit" onclick="event.stopPropagation();openEditModal('${d.id}')" title="Редактировать">
+      <i class="ti ti-pencil" aria-hidden="true"></i>
+    </button>
+    <div class="card-info">
+      <div class="card-cat">${m.label}</div>
       <div class="card-title">${d.title}</div>
-      <div class="card-meta">
-        <span class="card-cat ${m.cls}">${m.label}</span>
-        ${d.rating ? `<span class="rating-sm">★ ${d.rating}/5</span>` : ''}
-        ${d.done ? '<span class="done-tag">✓ были</span>' : ''}
-      </div>
-      <div class="card-desc">${d.desc || ''}</div>
-      <div class="card-actions">
-        <button class="btn ${d.liked ? 'like-on' : ''}" onclick="toggleLike('${d.id}')">
-          ${d.liked ? '❤️ Нравится' : '🤍 Лайк'}
-        </button>
-        <button class="btn ${d.done ? 'done-on' : ''}" onclick="toggleDone('${d.id}')">
-          ${d.done ? '✅ Были' : '○ Отметить'}
-        </button>
-        ${d.done ? `<button class="btn" onclick="doRepeat('${d.id}')">🔄 Ещё раз</button>` : ''}
-        ${ymap ? `<a class="btn btn-map" href="${ymap}" target="_blank">🗺 Карта</a>` : ''}
-        ${d.link ? `<a class="btn btn-site" href="${d.link}" target="_blank">🔗 Сайт</a>` : ''}
-      </div>
+      <div class="card-desc">${d.desc||''}</div>
+      ${d.done ? `<div class="card-done-badge">✓ были ${d.times>1?'· ×'+d.times:''}</div>` : ''}
     </div>
-    ${doneBlock}
   </div>`;
 }
 
 function render() {
   const filtered = getFiltered();
-  const grid = document.getElementById('cards-grid');
-  grid.innerHTML = filtered.length
+  document.getElementById('grid').innerHTML = filtered.length
     ? filtered.map(buildCard).join('')
-    : '<div class="empty">Нет свиданий в этой категории 🤷‍♀️</div>';
+    : '<div class="empty">Нет идей в этой категории</div>';
 }
 
-window.toggleAdd = function() {
-  const f = document.getElementById('add-form');
-  f.style.display = f.style.display === 'block' ? 'none' : 'block';
+function renderHistPreview() {
+  const done = ideas.filter(d => d.done && d.date && !d.deleted)
+    .sort((a,b) => new Date(b.date)-new Date(a.date)).slice(0,3);
+  const wrap = document.getElementById('hist-preview');
+  if (!done.length) { wrap.style.display='none'; return; }
+  wrap.style.display='block';
+  const m = catMeta;
+  document.getElementById('hist-list').innerHTML = done.map(d => {
+    const stars = '★'.repeat(d.rating||0)+'☆'.repeat(5-(d.rating||0));
+    const dateStr = d.date ? new Date(d.date).toLocaleDateString('ru',{day:'numeric',month:'long',year:'numeric'}) : '';
+    return `<div class="hist-item">
+      ${d.img ? `<img class="hist-thumb" src="${d.img}" alt="${d.title}" onerror="this.outerHTML='<div class=hist-thumb-ph>${(m[d.cat]||m.active).emoji}</div>'">` : `<div class="hist-thumb-ph">${(m[d.cat]||m.active).emoji}</div>`}
+      <div class="hist-body">
+        <div class="hist-title">${d.title}</div>
+        <div class="hist-date">${dateStr}</div>
+        ${d.rating ? `<div class="hist-stars">${stars}</div>` : ''}
+        ${d.review ? `<div class="hist-review">${d.review}</div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.goIdea = id => { window.location.href = `idea.html?id=${id}`; };
+
+window.toggleLike = async id => {
+  const d = ideas.find(x=>x.id===id);
+  if(d) await patch(id,{liked:!d.liked});
 };
 
-window.addIdea = async function() {
-  const title = document.getElementById('n-title').value.trim();
+window.askDelete = id => {
+  pendingDeleteId = id;
+  document.getElementById('confirm-modal').classList.add('show');
+};
+window.closeConfirm = () => {
+  pendingDeleteId = null;
+  document.getElementById('confirm-modal').classList.remove('show');
+};
+window.confirmDelete = async () => {
+  if (!pendingDeleteId) return;
+  await patch(pendingDeleteId, {deleted:true});
+  closeConfirm();
+};
+
+window.setFilter = (f, btn) => {
+  filter = f;
+  document.querySelectorAll('.fc').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const url = new URL(window.location);
+  if (f==='all') url.searchParams.delete('filter');
+  else url.searchParams.set('filter', f);
+  window.history.replaceState({}, '', url);
+  render();
+};
+
+window.openAddModal = () => {
+  document.getElementById('modal-title').textContent = 'Новая идея';
+  document.getElementById('edit-id').value = '';
+  ['f-title','f-desc','f-img','f-addr','f-link'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-cat').value='active';
+  document.getElementById('add-modal').classList.add('show');
+};
+
+window.openEditModal = id => {
+  const d = ideas.find(x=>x.id===id);
+  if(!d) return;
+  document.getElementById('modal-title').textContent = 'Редактировать';
+  document.getElementById('edit-id').value = id;
+  document.getElementById('f-title').value = d.title||'';
+  document.getElementById('f-desc').value = d.desc||'';
+  document.getElementById('f-cat').value = d.cat||'active';
+  document.getElementById('f-img').value = d.img||'';
+  document.getElementById('f-addr').value = d.addr||'';
+  document.getElementById('f-link').value = d.link||'';
+  document.getElementById('add-modal').classList.add('show');
+};
+
+window.closeModal = () => document.getElementById('add-modal').classList.remove('show');
+
+window.saveIdea = async () => {
+  const title = document.getElementById('f-title').value.trim();
   if (!title) return;
-  const addr = document.getElementById('n-addr').value.trim();
-  const newId = String(Date.now());
-  const newIdea = {
-    id: newId,
-    title,
-    desc: document.getElementById('n-desc').value.trim(),
-    cat: document.getElementById('n-cat').value,
-    img: document.getElementById('n-img').value.trim(),
-    addr,
-    link: document.getElementById('n-link').value.trim(),
-    liked: false, done: false, date: '', rating: 0, review: '', times: 0,
-  };
-  setSyncStatus('syncing', 'Сохраняем...');
-  try {
-    await set(ref(db, 'ideas/' + newId), newIdea);
-    ['n-title','n-desc','n-img','n-addr','n-link'].forEach(id => document.getElementById(id).value = '');
-    toggleAdd();
-  } catch(e) {
-    setSyncStatus('error', 'Не удалось добавить');
+  const editId = document.getElementById('edit-id').value;
+  const addr = document.getElementById('f-addr').value.trim();
+  if (editId) {
+    await patch(editId, {
+      title, desc: document.getElementById('f-desc').value.trim(),
+      cat: document.getElementById('f-cat').value,
+      img: document.getElementById('f-img').value.trim(),
+      addr, link: document.getElementById('f-link').value.trim(),
+    });
+  } else {
+    const newId = String(Date.now());
+    await set(ref(db,'ideas/'+newId), {
+      id:newId, title, desc:document.getElementById('f-desc').value.trim(),
+      cat:document.getElementById('f-cat').value,
+      img:document.getElementById('f-img').value.trim(),
+      addr, link:document.getElementById('f-link').value.trim(),
+      lat:55.751,lon:37.618,
+      liked:false,done:false,date:'',rating:0,review:'',times:0,deleted:false,
+    });
   }
+  closeModal();
 };
 
+// Close modals on bg click
+document.getElementById('add-modal').addEventListener('click', e => { if(e.target===e.currentTarget) closeModal(); });
+document.getElementById('confirm-modal').addEventListener('click', e => { if(e.target===e.currentTarget) closeConfirm(); });
 </script>
 </body>
 </html>
