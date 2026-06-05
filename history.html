@@ -17,19 +17,38 @@ body{font-family:var(--font-body);background:var(--white);color:var(--black);min
 .sync-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;flex-shrink:0}
 .sync-dot.syncing{background:#f59e0b;animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;max-width:800px;margin:2px auto 0;padding-bottom:40px}
-@media(min-width:600px){.grid{grid-template-columns:1fr 1fr 1fr}}
-.hcard{position:relative;overflow:hidden;background:#e5e1db;aspect-ratio:3/4;cursor:pointer}
-.hcard-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.hcard-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.1) 55%,transparent 75%)}
-.hcard-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:44px}
-.hcard-info{position:absolute;bottom:0;left:0;right:0;padding:10px}
-.hcard-date{font-size:9px;color:rgba(255,255,255,.55);letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px;font-family:var(--font-body)}
-.hcard-title{font-family:var(--font-display);font-size:15px;font-weight:500;color:#fff;line-height:1.2;margin-bottom:4px}
-.hcard-stars{font-size:13px;color:#FDD663;letter-spacing:-1px;margin-bottom:3px}
-.hcard-review{font-size:10px;color:rgba(255,255,255,.75);line-height:1.4;font-family:var(--font-body);font-weight:300;margin-bottom:6px}
-.hcard-repeat{font-size:9px;color:rgba(255,255,255,.7);font-family:var(--font-body);letter-spacing:.05em;border-bottom:1px solid rgba(255,255,255,.3);display:inline-block;cursor:pointer;padding-bottom:1px}
-.empty{text-align:center;padding:4rem 1rem;color:var(--muted);font-size:13px;font-weight:300;grid-column:1/-1}
+.content{max-width:800px;margin:0 auto;padding:0 16px 48px}
+.empty{text-align:center;padding:4rem 1rem;color:var(--muted);font-size:13px;font-weight:300}
+
+.hist-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:opacity .2s}
+.hist-item:hover{opacity:.75}
+.hist-item:last-child{border-bottom:none}
+.hist-thumb{width:100px;height:100px;flex-shrink:0;overflow:hidden;background:var(--cream)}
+.hist-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.hist-thumb-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:32px}
+.hist-right{flex:1;padding-top:2px}
+.hist-date{font-size:9px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px;font-family:var(--font-body)}
+.hist-title{font-family:var(--font-display);font-size:20px;font-weight:500;color:var(--black);margin-bottom:4px;line-height:1.2}
+.hist-cat{font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;font-family:var(--font-body)}
+.hist-stars{font-size:14px;color:#FDD663;letter-spacing:-1px;margin-bottom:5px}
+.hist-review{font-size:12px;color:#555;line-height:1.5;font-weight:300;margin-bottom:8px}
+.hist-actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn-repeat{padding:7px 14px;background:var(--black);color:var(--white);border:none;font-family:var(--font-body);font-size:11px;cursor:pointer;letter-spacing:.06em}
+.btn-repeat:hover{opacity:.8}
+.btn-open{padding:7px 14px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:11px;cursor:pointer;letter-spacing:.06em}
+
+/* PLAN MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.modal-bg.show{display:flex}
+@media(min-width:600px){.modal-bg{align-items:center}}
+.plan-modal{background:var(--white);width:100%;max-width:360px;padding:28px 20px;margin:16px}
+.plan-modal h3{font-family:var(--font-display);font-size:20px;font-weight:500;margin-bottom:6px}
+.plan-modal p{font-size:12px;color:var(--muted);margin-bottom:20px;font-weight:300;line-height:1.5}
+.plan-date-input{width:100%;font-size:13px;font-family:var(--font-body);padding:10px 12px;border:1px solid var(--border);background:var(--cream);color:var(--black);outline:none;margin-bottom:10px;display:none}
+.plan-btns{display:flex;flex-direction:column;gap:8px}
+.btn-plan-confirm{padding:11px;background:var(--black);color:var(--white);border:none;font-family:var(--font-body);font-size:12px;cursor:pointer;letter-spacing:.06em;text-align:left}
+.btn-plan-later{padding:11px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;cursor:pointer;letter-spacing:.06em;text-align:left}
+.btn-cancel-form{padding:11px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -44,7 +63,22 @@ body{font-family:var(--font-body);background:var(--white);color:var(--black);min
   <div class="sync-dot syncing" id="sync-dot"></div>
   <span id="sync-text">Загрузка...</span>
 </div>
-<div class="grid" id="grid"><div class="empty">Загрузка...</div></div>
+<div class="content" id="content"><div class="empty">Загрузка...</div></div>
+
+<!-- PLAN MODAL -->
+<div class="modal-bg" id="plan-modal">
+  <div class="plan-modal">
+    <h3>Повторить свидание</h3>
+    <p>Выберите дату или добавьте в план — определитесь позже</p>
+    <input type="hidden" id="plan-id">
+    <input type="date" class="plan-date-input" id="plan-date-input">
+    <div class="plan-btns">
+      <button class="btn-plan-confirm" onclick="togglePlanDate()">📅 Выбрать дату</button>
+      <button class="btn-plan-later" onclick="planWithoutDate()">Добавить в план, дату выберем позже</button>
+      <button class="btn-cancel-form" onclick="closeModal()" style="margin-top:4px">Отмена</button>
+    </div>
+  </div>
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -53,33 +87,57 @@ const app=initializeApp({databaseURL:"https://curly-dates-default-rtdb.europe-we
 const db=getDatabase(app);
 const catMeta={active:{label:'Активное',emoji:'🎯'},trip:{label:'Поездка',emoji:'✈️'},food:{label:'Ресторан',emoji:'🍽️'},sport:{label:'Спорт',emoji:'⚡'},culture:{label:'Культура',emoji:'🎭'},spa:{label:'Спа',emoji:'🛁'}};
 let ideas=[];
+
 function setSyncStatus(s,t){document.getElementById('sync-dot').className='sync-dot'+(s==='syncing'?' syncing':s==='error'?' error':'');document.getElementById('sync-text').textContent=t;}
+
 onValue(ref(db,'ideas'),snap=>{
   const data=snap.val();
   ideas=data?Object.values(data).filter(d=>d.done&&d.date&&!d.deleted).sort((a,b)=>new Date(b.date)-new Date(a.date)):[];
   setSyncStatus('ok','Синхронизировано');render();
 },err=>setSyncStatus('error',err.message));
+
 function render(){
-  const grid=document.getElementById('grid');
-  if(!ideas.length){grid.innerHTML='<div class="empty">Пока не было ни одного свидания — всё впереди ✨</div>';return;}
-  grid.innerHTML=ideas.map(d=>{
+  const el=document.getElementById('content');
+  if(!ideas.length){el.innerHTML='<div class="empty">Пока не было ни одного свидания — всё впереди ✨</div>';return;}
+  el.innerHTML=ideas.map(d=>{
     const m=catMeta[d.cat]||catMeta.active;
     const stars=d.rating?'★'.repeat(d.rating)+'☆'.repeat(5-d.rating):'';
-    const dateStr=new Date(d.date).toLocaleDateString('ru',{day:'numeric',month:'short',year:'numeric'});
-    return`<div class="hcard" onclick="window.location.href='idea.html?id=${d.id}'">
-      ${d.img?`<img class="hcard-img" src="${d.img}" alt="${d.title}" loading="lazy" onerror="this.style.display='none'">`:`<div class="hcard-emoji">${m.emoji}</div>`}
-      <div class="hcard-grad"></div>
-      <div class="hcard-info">
-        <div class="hcard-date">${dateStr}${(d.times||0)>1?' · ×'+d.times:''}</div>
-        <div class="hcard-title">${d.title}</div>
-        ${stars?`<div class="hcard-stars">${stars}</div>`:''}
-        ${d.review?`<div class="hcard-review">${d.review}</div>`:''}
-        <div class="hcard-repeat" onclick="event.stopPropagation();doRepeat('${d.id}')">Повторить →</div>
+    const dateStr=new Date(d.date).toLocaleDateString('ru',{day:'numeric',month:'long',year:'numeric'});
+    return`<div class="hist-item" onclick="window.location.href='idea.html?id=${d.id}'">
+      <div class="hist-thumb">${d.img?`<img src="${d.img}" alt="${d.title}" loading="lazy" onerror="this.outerHTML='<div class=hist-thumb-ph>${m.emoji}</div>'">`:`<div class="hist-thumb-ph">${m.emoji}</div>`}</div>
+      <div class="hist-right">
+        <div class="hist-date">${dateStr}${(d.times||0)>1?' · были ×'+d.times:''}</div>
+        <div class="hist-title">${d.title}</div>
+        <div class="hist-cat">${m.label}</div>
+        ${stars?`<div class="hist-stars">${stars}</div>`:''}
+        ${d.review?`<div class="hist-review">${d.review}</div>`:''}
+        <div class="hist-actions">
+          <button class="btn-repeat" onclick="event.stopPropagation();openPlan('${d.id}')">Повторить</button>
+          <button class="btn-open" onclick="event.stopPropagation();window.location.href='idea.html?id=${d.id}'">Открыть →</button>
+        </div>
       </div>
     </div>`;
   }).join('');
 }
-window.doRepeat=async id=>{const d=ideas.find(x=>x.id===id);if(d)await update(ref(db,'ideas/'+id),{times:(d.times||1)+1});};
+
+window.openPlan=id=>{
+  document.getElementById('plan-id').value=id;
+  document.getElementById('plan-date-input').value='';
+  document.getElementById('plan-date-input').style.display='none';
+  document.getElementById('plan-modal').classList.add('show');
+};
+window.togglePlanDate=()=>{
+  const inp=document.getElementById('plan-date-input');
+  inp.style.display=inp.style.display==='none'?'block':'none';
+  if(inp.style.display==='block'){inp.focus();inp.onchange=async()=>{const id=document.getElementById('plan-id').value;await update(ref(db,'ideas/'+id),{planned:true,plannedDate:inp.value});closeModal();};}
+};
+window.planWithoutDate=async()=>{
+  const id=document.getElementById('plan-id').value;
+  await update(ref(db,'ideas/'+id),{planned:true,plannedDate:''});
+  closeModal();
+};
+window.closeModal=()=>document.getElementById('plan-modal').classList.remove('show');
+document.getElementById('plan-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
 </script>
 </body>
 </html>
