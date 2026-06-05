@@ -3,115 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>История свиданий — Кучерявые свидания</title>
+<title>Наша история — Кучерявые свидания</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{--black:#0f0f0f;--white:#fafaf8;--cream:#f4f1ec;--muted:#888;--border:rgba(15,15,15,.1);--font-display:'Cormorant Garamond',serif;--font-body:'Geologica',sans-serif}
+:root{--black:#0f0f0f;--white:#fafaf8;--cream:#f4f1ec;--muted:#999;--border:rgba(15,15,15,.1);--font-display:'Cormorant Garamond',serif;--font-body:'Geologica',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-body);background:var(--white);color:var(--black);min-height:100vh}
-.header{padding:20px 16px 16px;max-width:800px;margin:0 auto;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border)}
-.back{color:var(--black);font-size:20px;opacity:.6;line-height:1}
-.header-text h1{font-family:var(--font-display);font-size:24px;font-weight:500}
-.header-text p{font-size:11px;color:var(--muted);margin-top:2px;font-weight:300;letter-spacing:.03em}
-.content{max-width:800px;margin:0 auto;padding:0 16px 40px}
-.empty{text-align:center;padding:4rem 1rem;color:var(--muted);font-size:13px;font-weight:300}
-.hist-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:opacity .2s}
-.hist-item:hover{opacity:.75}
-.hist-item:last-child{border-bottom:none}
-.hist-left{flex-shrink:0}
-.hist-thumb{width:60px;height:76px;object-fit:cover;background:var(--cream);display:block}
-.hist-thumb-ph{width:60px;height:76px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:24px}
-.hist-right{flex:1;min-width:0}
-.hist-date{font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;font-weight:400}
-.hist-title{font-family:var(--font-display);font-size:18px;font-weight:500;color:var(--black);margin-bottom:3px;line-height:1.2}
-.hist-cat{font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
-.hist-stars{font-size:14px;color:var(--black);letter-spacing:-1px;margin-bottom:5px}
-.hist-review{font-size:12px;color:#555;line-height:1.5;font-weight:300}
-.hist-actions{display:flex;gap:8px;margin-top:10px}
-.btn-repeat{padding:7px 14px;background:var(--black);color:var(--white);border:none;font-family:var(--font-body);font-size:11px;letter-spacing:.06em;cursor:pointer;transition:opacity .2s}
-.btn-repeat:hover{opacity:.8}
-.btn-open{padding:7px 14px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:11px;cursor:pointer;letter-spacing:.06em}
+.header{padding:24px 16px 20px;max-width:800px;margin:0 auto;display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--border)}
+.back{color:var(--black);font-size:22px;opacity:.5;line-height:1;text-decoration:none;flex-shrink:0}
+.header-text h1{font-family:var(--font-display);font-size:26px;font-weight:500}
+.header-text p{font-size:11px;color:var(--muted);margin-top:3px;font-weight:300;letter-spacing:.03em}
 .sync-bar{padding:8px 16px;max-width:800px;margin:0 auto;display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted)}
 .sync-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;flex-shrink:0}
 .sync-dot.syncing{background:#f59e0b;animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;max-width:800px;margin:2px auto 0;padding-bottom:40px}
+@media(min-width:600px){.grid{grid-template-columns:1fr 1fr 1fr}}
+.hcard{position:relative;overflow:hidden;background:#e5e1db;aspect-ratio:3/4;cursor:pointer}
+.hcard-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.hcard-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.1) 55%,transparent 75%)}
+.hcard-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:44px}
+.hcard-info{position:absolute;bottom:0;left:0;right:0;padding:10px}
+.hcard-date{font-size:9px;color:rgba(255,255,255,.55);letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px;font-family:var(--font-body)}
+.hcard-title{font-family:var(--font-display);font-size:15px;font-weight:500;color:#fff;line-height:1.2;margin-bottom:4px}
+.hcard-stars{font-size:13px;color:#FDD663;letter-spacing:-1px;margin-bottom:3px}
+.hcard-review{font-size:10px;color:rgba(255,255,255,.75);line-height:1.4;font-family:var(--font-body);font-weight:300;margin-bottom:6px}
+.hcard-repeat{font-size:9px;color:rgba(255,255,255,.7);font-family:var(--font-body);letter-spacing:.05em;border-bottom:1px solid rgba(255,255,255,.3);display:inline-block;cursor:pointer;padding-bottom:1px}
+.empty{text-align:center;padding:4rem 1rem;color:var(--muted);font-size:13px;font-weight:300;grid-column:1/-1}
 </style>
 </head>
 <body>
 <div class="header">
-  <a class="back" href="index.html">&#8592;</a>
+  <a class="back" href="index.html">←</a>
   <div class="header-text">
-    <h1>История свиданий</h1>
-    <p>По дате — от новых к старым</p>
+    <h1>Наша история</h1>
+    <p>Все свидания — от новых к старым</p>
   </div>
 </div>
 <div class="sync-bar">
   <div class="sync-dot syncing" id="sync-dot"></div>
   <span id="sync-text">Загрузка...</span>
 </div>
-<div class="content">
-  <div id="list"><div class="empty">Загрузка...</div></div>
-</div>
+<div class="grid" id="grid"><div class="empty">Загрузка...</div></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-const app = initializeApp({ databaseURL: "https://curly-dates-default-rtdb.europe-west1.firebasedatabase.app/" });
-const db = getDatabase(app);
-const ideasRef = ref(db, 'ideas');
-
-const catMeta = {
-  active:{label:'Активное',emoji:'🎯'}, trip:{label:'Поездка',emoji:'✈️'},
-  food:{label:'Ресторан',emoji:'🍽️'}, sport:{label:'Спорт',emoji:'⚡'},
-  culture:{label:'Культура',emoji:'🎭'}, spa:{label:'Спа',emoji:'🛁'},
-};
-
-let ideas = [];
-
-function setSyncStatus(s, t) {
-  document.getElementById('sync-dot').className = 'sync-dot'+(s==='syncing'?' syncing':s==='error'?' error':'');
-  document.getElementById('sync-text').textContent = t;
-}
-
-onValue(ideasRef, snap => {
-  const data = snap.val();
-  ideas = data ? Object.values(data).filter(d => d.done && d.date && !d.deleted)
-    .sort((a,b) => new Date(b.date)-new Date(a.date)) : [];
-  setSyncStatus('ok', 'Синхронизировано');
-  render();
-}, err => setSyncStatus('error', err.message));
-
-function render() {
-  const el = document.getElementById('list');
-  if (!ideas.length) { el.innerHTML = '<div class="empty">Пока не было ни одного свидания — всё впереди ✨</div>'; return; }
-  el.innerHTML = ideas.map(d => {
-    const m = catMeta[d.cat]||catMeta.active;
-    const stars = d.rating ? '★'.repeat(d.rating)+'☆'.repeat(5-d.rating) : '';
-    const dateStr = new Date(d.date).toLocaleDateString('ru',{day:'numeric',month:'long',year:'numeric'});
-    return `<div class="hist-item" onclick="window.location.href='idea.html?id=${d.id}'">
-      ${d.img ? `<div class="hist-left"><img class="hist-thumb" src="${d.img}" alt="${d.title}" onerror="this.outerHTML='<div class=hist-thumb-ph>${m.emoji}</div>'"></div>`
-               : `<div class="hist-left"><div class="hist-thumb-ph">${m.emoji}</div></div>`}
-      <div class="hist-right">
-        <div class="hist-date">${dateStr}${d.times>1?' · повторяли ×'+d.times:''}</div>
-        <div class="hist-title">${d.title}</div>
-        <div class="hist-cat">${m.label}</div>
-        ${stars ? `<div class="hist-stars">${stars}</div>` : ''}
-        ${d.review ? `<div class="hist-review">${d.review}</div>` : ''}
-        <div class="hist-actions">
-          <button class="btn-repeat" onclick="event.stopPropagation();doRepeat('${d.id}')">Повторить</button>
-          <button class="btn-open" onclick="event.stopPropagation();window.location.href='idea.html?id=${d.id}'">Открыть →</button>
-        </div>
+const app=initializeApp({databaseURL:"https://curly-dates-default-rtdb.europe-west1.firebasedatabase.app/"});
+const db=getDatabase(app);
+const catMeta={active:{label:'Активное',emoji:'🎯'},trip:{label:'Поездка',emoji:'✈️'},food:{label:'Ресторан',emoji:'🍽️'},sport:{label:'Спорт',emoji:'⚡'},culture:{label:'Культура',emoji:'🎭'},spa:{label:'Спа',emoji:'🛁'}};
+let ideas=[];
+function setSyncStatus(s,t){document.getElementById('sync-dot').className='sync-dot'+(s==='syncing'?' syncing':s==='error'?' error':'');document.getElementById('sync-text').textContent=t;}
+onValue(ref(db,'ideas'),snap=>{
+  const data=snap.val();
+  ideas=data?Object.values(data).filter(d=>d.done&&d.date&&!d.deleted).sort((a,b)=>new Date(b.date)-new Date(a.date)):[];
+  setSyncStatus('ok','Синхронизировано');render();
+},err=>setSyncStatus('error',err.message));
+function render(){
+  const grid=document.getElementById('grid');
+  if(!ideas.length){grid.innerHTML='<div class="empty">Пока не было ни одного свидания — всё впереди ✨</div>';return;}
+  grid.innerHTML=ideas.map(d=>{
+    const m=catMeta[d.cat]||catMeta.active;
+    const stars=d.rating?'★'.repeat(d.rating)+'☆'.repeat(5-d.rating):'';
+    const dateStr=new Date(d.date).toLocaleDateString('ru',{day:'numeric',month:'short',year:'numeric'});
+    return`<div class="hcard" onclick="window.location.href='idea.html?id=${d.id}'">
+      ${d.img?`<img class="hcard-img" src="${d.img}" alt="${d.title}" loading="lazy" onerror="this.style.display='none'">`:`<div class="hcard-emoji">${m.emoji}</div>`}
+      <div class="hcard-grad"></div>
+      <div class="hcard-info">
+        <div class="hcard-date">${dateStr}${(d.times||0)>1?' · ×'+d.times:''}</div>
+        <div class="hcard-title">${d.title}</div>
+        ${stars?`<div class="hcard-stars">${stars}</div>`:''}
+        ${d.review?`<div class="hcard-review">${d.review}</div>`:''}
+        <div class="hcard-repeat" onclick="event.stopPropagation();doRepeat('${d.id}')">Повторить →</div>
       </div>
     </div>`;
   }).join('');
 }
-
-window.doRepeat = async id => {
-  const d = ideas.find(x=>x.id===id);
-  if(!d) return;
-  await update(ref(db,'ideas/'+id), {times:(d.times||1)+1});
-};
+window.doRepeat=async id=>{const d=ideas.find(x=>x.id===id);if(d)await update(ref(db,'ideas/'+id),{times:(d.times||1)+1});};
 </script>
 </body>
 </html>
