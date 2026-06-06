@@ -5,7 +5,7 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Идея — Кучерявые свидания</title>
-<script>const _p="ВАШ_ПАРОЛЬ";if(localStorage.getItem("curly_auth")!==_p){const inp=prompt("Введите пароль:");if(inp===_p){localStorage.setItem("curly_auth",_p);}else{document.body.innerHTML="<div style='display:flex;align-items:center;justify-content:center;height:100vh;font-family:Georgia,serif;color:#999;font-size:14px'>Неверный пароль</div>";throw new Error("auth");}}</script>
+
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{--black:#0f0f0f;--white:#fafaf8;--cream:#f4f1ec;--muted:#999;--border:rgba(15,15,15,.1);--font-display:'Cormorant Garamond',serif;--font-body:'Geologica',sans-serif}
@@ -183,7 +183,7 @@ function renderPage(){
     img.className='hero-real-img';
     img.src=idea.img;
     img.alt=idea.title;
-    img.onerror=()=>img.remove();
+    img.onload=()=>{const e=document.getElementById('hero-emoji');if(e)e.style.display='none';};img.onerror=()=>img.remove();
     // insert before back button
     hero.insertBefore(img,hero.querySelector('.hero-back'));
   }
@@ -245,7 +245,7 @@ function renderPage(){
     <div class="idea-title">${idea.title}</div>
     ${idea.desc?`<div class="idea-desc">${idea.desc}</div>`:''}
     ${idea.addr?`<div class="idea-addr"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${idea.addr}</div>`:''}
-    ${idea.link&&!idea.planned&&!idea.done?`<a class="idea-link" href="${idea.link}" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Открыть сайт</a>`:''}
+    ${idea.link?`<a class="idea-link" href="${idea.link}" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Открыть сайт</a>`:''}
 
     <div class="divider"></div>
     ${planBlock}
