@@ -2,36 +2,34 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Кучерявые свидания</title>
+<script>const _p="memory";if(localStorage.getItem("curly_auth")!==_p){const inp=prompt("Введите пароль:");if(inp===_p){localStorage.setItem("curly_auth",_p);}else{document.body.innerHTML="<div style='display:flex;align-items:center;justify-content:center;height:100vh;font-family:Georgia,serif;color:#999;font-size:14px'>Неверный пароль</div>";throw new Error("auth");}}</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{--black:#0f0f0f;--white:#fafaf8;--cream:#f4f1ec;--muted:#999;--border:rgba(15,15,15,.1);--font-display:'Cormorant Garamond',serif;--font-body:'Geologica',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:var(--font-body);background:var(--white);color:var(--black);min-height:100vh}
 a{text-decoration:none;color:inherit}
-
 .header{padding:24px 16px 0;max-width:800px;margin:0 auto}
 .header-top{display:flex;align-items:flex-start;justify-content:space-between}
 .site-title{font-family:var(--font-display);font-size:28px;font-weight:600;letter-spacing:-.02em;line-height:1}
 .site-sub{font-size:11px;color:var(--muted);letter-spacing:.04em;margin-top:3px;font-weight:300}
-
 .burger{position:relative}
 .burger-btn{width:36px;height:36px;background:transparent;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0}
 .burger-line{width:20px;height:1.5px;background:var(--black);border-radius:1px;display:block}
-.burger-menu{position:absolute;top:42px;right:0;background:var(--white);border:1px solid var(--border);min-width:170px;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,.08);display:none}
+.burger-menu{position:absolute;top:42px;right:0;background:var(--white);border:1px solid var(--border);min-width:180px;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,.08);display:none}
 .burger-menu.open{display:block}
 .burger-item{display:flex;align-items:center;gap:10px;padding:12px 16px;font-size:12px;color:var(--black);cursor:pointer;border-bottom:1px solid var(--border);font-family:var(--font-body);letter-spacing:.03em;text-decoration:none}
 .burger-item:last-child{border-bottom:none}
 .burger-item:hover{background:var(--cream)}
 .burger-item svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.5;fill:none;opacity:.6;flex-shrink:0}
-
 .sync-bar{padding:8px 16px;max-width:800px;margin:0 auto;display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);letter-spacing:.04em}
 .sync-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;flex-shrink:0}
 .sync-dot.syncing{background:#f59e0b;animation:pulse 1s infinite}
 .sync-dot.error{background:#ef4444}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-
 .hero-block{margin:20px 16px 0;max-width:calc(800px - 32px);margin-left:auto;margin-right:auto}
 .hero-inner{display:flex;gap:16px;align-items:flex-start}
 .hero-thumb{width:160px;height:160px;flex-shrink:0;overflow:hidden;background:var(--cream)}
@@ -45,66 +43,45 @@ a{text-decoration:none;color:inherit}
 .hero-link{font-size:11px;color:var(--black);letter-spacing:.04em;border-bottom:1px solid rgba(0,0,0,.25);display:inline-block;cursor:pointer;padding-bottom:1px;font-family:var(--font-body)}
 .hero-choose{font-size:11px;color:var(--black);letter-spacing:.04em;border-bottom:1px solid rgba(0,0,0,.25);display:inline-flex;align-items:center;gap:5px;cursor:pointer;padding-bottom:1px;font-family:var(--font-body);background:none;border-top:none;border-left:none;border-right:none;padding-left:0;padding-right:0}
 .hero-choose svg{width:12px;height:12px;stroke:var(--black);stroke-width:1.8;fill:none}
-
 .nudge{background:#edf5ef;border-left:2px solid #a8d4b0;padding:12px 16px;margin-top:14px;display:none}
 .nudge p{font-size:12px;color:#3a6644;font-weight:300;line-height:1.55;font-style:italic;font-family:var(--font-body)}
-
 .add-top-wrap{padding:20px 16px 0;max-width:800px;margin:0 auto}
-.add-top-btn{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--black);color:var(--white);font-family:var(--font-body);font-size:12px;font-weight:400;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer;width:100%;justify-content:center;transition:opacity .2s}
+.add-top-btn{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--black);color:var(--white);font-family:var(--font-body);font-size:12px;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer;width:100%;justify-content:center;transition:opacity .2s}
 .add-top-btn:hover{opacity:.85}
 .add-top-btn svg{width:14px;height:14px;stroke:#fff;stroke-width:2;fill:none}
-
-/* MAP */
-.map-wrap{padding:20px 16px 0;max-width:800px;margin:0 auto}
-.map-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.map-title{font-size:9px;color:var(--black);letter-spacing:.1em;text-transform:uppercase;font-family:var(--font-body)}
-.map-ext{font-size:10px;color:var(--muted);font-family:var(--font-body);border-bottom:1px solid rgba(0,0,0,.15);cursor:pointer;letter-spacing:.04em;text-decoration:none}
-.map-frame{width:100%;height:220px;border:none;display:block;background:#e8e4de}
-.map-frame iframe{width:100%;height:100%;border:none;display:block}
-.map-legend{display:flex;gap:14px;margin-top:7px;flex-wrap:wrap}
-.ml{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted);font-family:var(--font-body)}
-.mld{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-
 .filters-wrap{padding:20px 16px 0;max-width:800px;margin:0 auto}
 .filters{display:flex;gap:0;overflow-x:auto;border-bottom:1px solid var(--border)}
 .filters::-webkit-scrollbar{display:none}
-.fc{padding:10px 14px;border-bottom:2px solid transparent;background:transparent;color:var(--muted);font-size:11px;font-family:var(--font-body);white-space:nowrap;cursor:pointer;margin-bottom:-1px;letter-spacing:.04em;font-weight:400;border-top:none;border-left:none;border-right:none;transition:all .2s}
+.fc{padding:10px 14px;border-bottom:2px solid transparent;background:transparent;color:var(--muted);font-size:11px;font-family:var(--font-body);white-space:nowrap;cursor:pointer;margin-bottom:-1px;letter-spacing:.04em;border-top:none;border-left:none;border-right:none;transition:all .2s}
 .fc.on{color:var(--black);border-bottom-color:var(--black);font-weight:500}
 .fc:hover:not(.on){color:var(--black)}
-
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;max-width:800px;margin:2px auto 0}
 @media(min-width:600px){.grid{grid-template-columns:1fr 1fr 1fr}}
-
 .card{position:relative;overflow:hidden;cursor:pointer;background:#e8e5e0;aspect-ratio:2/3}
-.card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.card-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s}
 .card:hover .card-img{transform:scale(1.03)}
 .card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.58) 0%,rgba(0,0,0,.08) 52%,transparent 72%)}
 .card-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:52px}
-
 .ic{position:absolute;background:none;border:none;outline:none;box-shadow:none;-webkit-appearance:none;appearance:none;padding:0;margin:0;cursor:pointer;line-height:0;filter:drop-shadow(0 1px 3px rgba(0,0,0,.6))}
 .ic-heart{top:10px;right:10px}
 .ic-del{top:10px;left:10px}
 .ic-edit{top:34px;left:10px}
-
 .card-info{position:absolute;bottom:0;left:0;right:0;padding:10px 10px 12px;z-index:1}
-.card-cat{font-size:9px;color:rgba(255,255,255,.6);letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;font-weight:400}
+.card-cat{font-size:9px;color:rgba(255,255,255,.6);letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
 .card-title{font-family:var(--font-display);font-size:16px;font-weight:500;color:#fff;line-height:1.2;margin-bottom:3px}
 .card-desc{font-size:10px;color:rgba(255,255,255,.7);line-height:1.4;font-weight:300}
 .card-done-badge{display:inline-block;font-size:9px;color:rgba(255,255,255,.85);background:rgba(255,255,255,.15);padding:2px 7px;margin-top:5px;letter-spacing:.06em;text-transform:uppercase}
-
 .c-plan-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);font-size:9px;color:#fff;font-family:var(--font-body);letter-spacing:.04em;cursor:pointer;margin-top:5px;backdrop-filter:blur(4px)}
 .c-plan-btn svg{width:11px;height:11px;stroke:#fff;stroke-width:1.8;fill:none;flex-shrink:0}
-.c-planned-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;background:rgba(255,255,255,.92);font-size:9px;color:var(--black);font-family:var(--font-body);letter-spacing:.04em;margin-top:5px}
+.c-planned-wrap{display:flex;flex-direction:column;gap:3px;margin-top:5px}
+.c-planned-badge{display:inline-flex;align-items:center;gap:5px;padding:4px 8px;background:rgba(255,255,255,.92);font-size:9px;color:var(--black);font-family:var(--font-body);letter-spacing:.04em}
 .c-planned-badge svg{width:11px;height:11px;stroke:var(--black);stroke-width:1.8;fill:none;flex-shrink:0}
-.c-plan-date-link{display:inline-block;margin-top:3px;font-size:9px;color:rgba(255,255,255,.7);font-family:var(--font-body);border-bottom:1px solid rgba(255,255,255,.3);cursor:pointer;letter-spacing:.04em}
-
+.c-cancel-plan{display:inline-block;font-size:9px;color:rgba(255,255,255,.6);font-family:var(--font-body);border-bottom:1px solid rgba(255,255,255,.25);cursor:pointer;letter-spacing:.04em;background:none;border-top:none;border-left:none;border-right:none;padding:0}
+.c-repeat-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);font-size:9px;color:#fff;font-family:var(--font-body);letter-spacing:.04em;cursor:pointer;margin-top:5px}
 .empty{grid-column:1/-1;text-align:center;padding:3rem 1rem;color:var(--muted);font-size:13px;font-weight:300}
-
 .add-bottom-wrap{padding:20px 16px;max-width:800px;margin:0 auto}
 .add-bottom-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;cursor:pointer;width:100%;letter-spacing:.06em;transition:all .2s}
 .add-bottom-btn:hover{border-color:var(--black);color:var(--black)}
-
-/* HISTORY PREVIEW — список */
 .hist-section{max-width:800px;margin:0 auto;padding:0 16px 32px;border-top:1px solid var(--border);margin-top:8px}
 .hist-head{display:flex;align-items:center;justify-content:space-between;padding:20px 0 16px}
 .hist-head span{font-family:var(--font-display);font-size:20px;font-weight:500}
@@ -117,45 +94,39 @@ a{text-decoration:none;color:inherit}
 .hist-thumb-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px}
 .hist-right{flex:1;padding-top:2px}
 .hist-date-sm{font-size:9px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px;font-family:var(--font-body)}
-.hist-title-sm{font-family:var(--font-display);font-size:17px;font-weight:500;color:var(--black);margin-bottom:3px;line-height:1.2}
+.hist-title-sm{font-family:var(--font-display);font-size:17px;font-weight:500;margin-bottom:3px;line-height:1.2}
 .hist-stars-sm{font-size:12px;color:#FDD663;letter-spacing:-1px;margin-bottom:3px}
 .hist-review-sm{font-size:11px;color:var(--muted);line-height:1.4;font-family:var(--font-body);font-weight:300;margin-bottom:6px}
 .hist-repeat-btn{font-size:10px;color:var(--black);font-family:var(--font-body);letter-spacing:.05em;border-bottom:1px solid rgba(0,0,0,.25);display:inline-block;cursor:pointer;padding-bottom:1px;background:none;border-top:none;border-left:none;border-right:none;padding-left:0;padding-right:0}
-
-/* MODALS */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:flex-end;justify-content:center}
 .modal-bg.show{display:flex}
 @media(min-width:600px){.modal-bg{align-items:center}}
 .modal{background:var(--white);width:100%;max-width:480px;padding:28px 20px;max-height:90vh;overflow-y:auto}
 .modal h3{font-family:var(--font-display);font-size:22px;font-weight:500;margin-bottom:22px}
 .form-row{margin-bottom:14px}
-.form-row label{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;font-weight:400}
+.form-row label{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
 .form-row input,.form-row textarea,.form-row select{width:100%;font-size:13px;font-family:var(--font-body);padding:10px 12px;border:1px solid var(--border);background:var(--cream);color:var(--black);outline:none;-webkit-appearance:none;border-radius:0}
 .form-row input:focus,.form-row textarea:focus,.form-row select:focus{border-color:var(--black)}
 .form-row textarea{height:64px;resize:none}
 .form-btns{display:flex;gap:8px;margin-top:20px}
 .btn-save{flex:1;padding:12px;background:var(--black);color:var(--white);font-family:var(--font-body);font-size:12px;letter-spacing:.08em;text-transform:uppercase;border:none;cursor:pointer}
 .btn-cancel-form{padding:12px 20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;cursor:pointer}
-
 .plan-modal{background:var(--white);width:100%;max-width:360px;padding:28px 20px;margin:16px}
 .plan-modal h3{font-family:var(--font-display);font-size:20px;font-weight:500;margin-bottom:6px}
 .plan-modal p{font-size:12px;color:var(--muted);margin-bottom:20px;font-weight:300;line-height:1.5}
-.plan-date-input{width:100%;font-size:13px;font-family:var(--font-body);padding:10px 12px;border:1px solid var(--border);background:var(--cream);color:var(--black);outline:none;margin-bottom:10px;display:none}
+.plan-date-input{width:100%;font-size:13px;font-family:var(--font-body);padding:10px 12px;border:1px solid var(--border);background:var(--cream);color:var(--black);outline:none;margin-bottom:10px;display:none;-webkit-appearance:none}
 .plan-btns{display:flex;flex-direction:column;gap:8px}
 .btn-plan-confirm{padding:11px;background:var(--black);color:var(--white);border:none;font-family:var(--font-body);font-size:12px;cursor:pointer;letter-spacing:.06em;text-align:left}
 .btn-plan-later{padding:11px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;cursor:pointer;letter-spacing:.06em;text-align:left}
-
 .confirm-modal{background:var(--white);width:100%;max-width:360px;padding:28px 20px;margin:16px}
 .confirm-modal p{font-size:14px;color:var(--black);margin-bottom:22px;line-height:1.5;font-weight:300}
 .confirm-btns{display:flex;gap:8px}
 .btn-confirm-del{flex:1;padding:11px;background:var(--black);color:var(--white);font-family:var(--font-body);font-size:12px;border:none;cursor:pointer;letter-spacing:.06em}
 .btn-confirm-cancel{flex:1;padding:11px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;cursor:pointer}
-
 @media(max-width:480px){.hero-thumb{width:130px;height:130px}.site-title{font-size:22px}}
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="header-top">
     <div>
@@ -169,6 +140,9 @@ a{text-decoration:none;color:inherit}
       <div class="burger-menu" id="burger-menu">
         <a class="burger-item" href="history.html">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Наша история
+        </a>
+        <a class="burger-item" href="map.html">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Идеи на карте
         </a>
         <a class="burger-item" href="deleted.html">
           <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>Удалённые
@@ -203,27 +177,11 @@ a{text-decoration:none;color:inherit}
   </button>
 </div>
 
-<!-- MAP -->
-<div class="map-wrap">
-  <div class="map-top">
-    <div class="map-title">Все места на карте</div>
-    <a class="map-ext" id="map-ext-link" href="https://yandex.ru/maps/?text=Москва" target="_blank">Открыть в Яндекс →</a>
-  </div>
-  <div class="map-frame"><iframe id="map-iframe" src="" loading="lazy"></iframe></div>
-  <div class="map-legend">
-    <div class="ml"><div class="mld" style="background:#e8304a"></div>Рестораны</div>
-    <div class="ml"><div class="mld" style="background:#1a6ef0"></div>Культура</div>
-    <div class="ml"><div class="mld" style="background:#22c55e"></div>Спорт</div>
-    <div class="ml"><div class="mld" style="background:#f59e0b"></div>Активное</div>
-    <div class="ml"><div class="mld" style="background:#8b5cf6"></div>Поездки</div>
-    <div class="ml"><div class="mld" style="background:#10b981"></div>Спа</div>
-  </div>
-</div>
-
 <div class="filters-wrap">
   <div class="filters">
     <button class="fc on" onclick="setFilter('all',this)">Все</button>
     <button class="fc" onclick="setFilter('liked',this)">Нравится</button>
+    <button class="fc" onclick="setFilter('planned',this)">Запланировано</button>
     <button class="fc" onclick="setFilter('trip',this)">Поездки</button>
     <button class="fc" onclick="setFilter('sport',this)">Спорт</button>
     <button class="fc" onclick="setFilter('food',this)">Рестораны</button>
@@ -240,10 +198,7 @@ a{text-decoration:none;color:inherit}
 </div>
 
 <div class="hist-section" id="hist-section" style="display:none">
-  <div class="hist-head">
-    <span>Наша история</span>
-    <a href="history.html">Все →</a>
-  </div>
+  <div class="hist-head"><span>Наша история</span><a href="history.html">Все →</a></div>
   <div id="hist-list"></div>
 </div>
 
@@ -300,100 +255,80 @@ a{text-decoration:none;color:inherit}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, set, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
 const app = initializeApp({ databaseURL: "https://curly-dates-default-rtdb.europe-west1.firebasedatabase.app/" });
 const db = getDatabase(app);
 const ideasRef = ref(db, 'ideas');
 
 const catMeta = {
-  active:{label:'Активное',emoji:'🎯',color:'pm2ytm'},
-  trip:  {label:'Поездка', emoji:'✈️',color:'pm2vlm'},
-  food:  {label:'Ресторан',emoji:'🍽️',color:'pm2rdm'},
-  sport: {label:'Спорт',   emoji:'⚡',color:'pm2gnm'},
-  culture:{label:'Культура',emoji:'🎭',color:'pm2blm'},
-  spa:   {label:'Спа',     emoji:'🛁',color:'pm2grm'},
+  active:{label:'Активное',emoji:'🎯'},trip:{label:'Поездка',emoji:'✈️'},
+  food:{label:'Ресторан',emoji:'🍽️'},sport:{label:'Спорт',emoji:'⚡'},
+  culture:{label:'Культура',emoji:'🎭'},spa:{label:'Спа',emoji:'🛁'},
 };
 
 const SEED = [
-  {id:'1',title:'Гольф-симулятор CityGolf',cat:'sport',desc:'Аминьевское ш., 6. Новые симуляторы, ресторан, Golfmarket. Рейтинг 4.6.',addr:'Москва, Аминьевское шоссе, 6',lat:55.706,lon:37.457,link:'https://citygolf.ru',img:'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'2',title:'Спа с сауной и массажем',cat:'spa',desc:'Частная баня на двоих — сауна, хороший массаж. Подборка @svalika_wellbeing.',addr:'Москва',lat:55.749,lon:37.539,link:'https://www.instagram.com/p/DYSPIP8DaTf/',img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80',liked:true,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'3',title:'Катер без прав — Строгино',cat:'active',desc:'Управляешь сам, права не нужны. Маршрут вдоль Серебряного бора.',addr:'Москва, Строгино, яхт-клуб Медуза',lat:55.789,lon:37.408,link:'https://thelodka.ru',img:'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'4',title:'Бурлеск-кабаре Гримёрка',cat:'culture',desc:'Пушечная, 9/6. Шоу «Мадам Бум» — живой джаз, блёстки, варьете 20-х. 18+.',addr:'Москва, Пушечная улица, 9/6',lat:55.757,lon:37.620,link:'https://grimerka.art/madamboom',img:'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'5',title:'Ресторан ИКРА',cat:'food',desc:'Большая Никитская, 5. Chef\'s table на 16 мест, сеты от Мухина и топ-шефов WRF.',addr:'Москва, Большая Никитская, 5',lat:55.755,lon:37.608,link:'',img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80',liked:true,done:true,planned:false,plannedDate:'',date:'2025-04-10',rating:4,review:'Очень атмосферно, сеты интересные.',times:1,deleted:false},
-  {id:'6',title:'Ресторан AYU',cat:'food',desc:'Романов пер., 2. Омакасэ 22 подачи, 300-летний кипарис хиноки, всего 12 мест.',addr:'Москва, Романов переулок, 2',lat:55.754,lon:37.608,link:'',img:'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&q=80',liked:true,done:true,planned:false,plannedDate:'',date:'2025-05-12',rating:5,review:'Лучший омакасэ в Москве. Обязательно повторим.',times:1,deleted:false},
-  {id:'7',title:'Ресторан Olluco',cat:'food',desc:'Даев пер., 19. Перуанская кухня от #1 в мире Вирхилио Мартинеса. Рейтинг 4.5.',addr:'Москва, Даев переулок, 19',lat:55.770,lon:37.638,link:'',img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80',liked:true,done:true,planned:false,plannedDate:'',date:'2025-03-05',rating:4,review:'Интересно, необычно. Порции маловаты.',times:0,deleted:false},
-  {id:'8',title:'Планетарий — вечер под куполом',cat:'culture',desc:'Садовая-Кудринская, 5. Программа «Только для вас» + Парк неба + Большая обсерватория.',addr:'Москва, Садовая-Кудринская, 5',lat:55.761,lon:37.583,link:'https://planetarium-moscow.ru',img:'https://images.unsplash.com/photo-1532798369041-b33eb576ef16?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'9',title:'Винная дегустация',cat:'food',desc:'Слепая дегустация у сомелье или в Wine & Corks — интереснее любого ресторана.',addr:'Москва',lat:55.760,lon:37.597,link:'',img:'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'10',title:'Матч: футбол / хоккей / теннис',cat:'sport',desc:'Лужники, ВТБ Арена — атмосфера живого матча не сравнима с телевизором.',addr:'Москва, стадион Лужники',lat:55.715,lon:37.556,link:'https://tickets.spartakmoscow.ru',img:'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'11',title:'Поездка в Казань',cat:'trip',desc:'Отель с панорамным выходом прямо на стадион — viral-рилс. Долететь 1 час.',addr:'Казань, стадион Ак Барс Арена',lat:55.800,lon:49.145,link:'https://www.instagram.com/reel/DX4qLTuRmEg/',img:'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80',liked:true,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'12',title:'Moscow Raceway — гонки',cat:'sport',desc:'Шелудьково, Подмосковье. Один из лучших треков России. Рейтинг 4.8.',addr:'Шелудьково, Московская область',lat:55.996,lon:36.270,link:'https://moscowraceway.ru',img:'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'13',title:'Вертолётный тур над Москвой',cat:'active',desc:'30–40 минут над Кремлём, рекой и Сити. Незабываемо — как раз ваш формат.',addr:'Москва, Ходынское поле',lat:55.790,lon:37.560,link:'',img:'https://images.unsplash.com/photo-1534481016308-0fca71578ae5?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'14',title:'Ужин на крыше / панорамный',cat:'food',desc:'Sixty, Babel или закрытые roof-вечера. Вид на всю Москву + хорошая кухня.',addr:'Москва, Пресненская набережная, 8',lat:55.748,lon:37.540,link:'',img:'https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'15',title:'Стрельба из лука / тир',cat:'active',desc:'Archery-клуб или закрытый тир — новый опыт вдвоём, азартно, не банально.',addr:'Москва',lat:55.657,lon:37.620,link:'',img:'https://images.unsplash.com/photo-1569517282132-25d22f4573e6?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'16',title:'Яхта или SUP на закате',cat:'active',desc:'Яхта с капитаном или SUP-доски по вечернему Строгино. Закат на воде.',addr:'Москва, Строгино',lat:55.792,lon:37.402,link:'',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'17',title:'Иммерсивный театр',cat:'culture',desc:'«Чёрная курица» или DetectivePro — история + живые актёры + загадки. Не комната-квест.',addr:'Москва',lat:55.759,lon:37.645,link:'',img:'https://images.unsplash.com/photo-1503095396549-807759245b35?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'18',title:'SPA-выходные — Foresta',cat:'trip',desc:'Foresta Festival Park — термы, баня, лес, коттеджи. Час от Москвы. Рейтинг 4.2.',addr:'Прохорово, Подмосковье',lat:55.305,lon:37.631,link:'https://foresta.su',img:'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'19',title:'Конный выезд или параплан',cat:'active',desc:'Конная прогулка в Подмосковье или тандем на параплане с инструктором.',addr:'Подмосковье, Алабино',lat:55.600,lon:37.080,link:'',img:'https://images.unsplash.com/photo-1553284966-19b8815c7817?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
-  {id:'20',title:'Кино в Пионере',cat:'culture',desc:'Кутузовский, 21. Авторское кино, фестивальные хиты, коктейль-бар. Рейтинг 4.8.',addr:'Москва, Кутузовский проспект, 21',lat:55.745,lon:37.549,link:'https://pioner-cinema.ru',img:'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false},
+  {id:'1',title:'Гольф-симулятор CityGolf',cat:'sport',desc:'Аминьевское ш., 6. Новые симуляторы, ресторан, Golfmarket. Рейтинг 4.6.',addr:'Москва, Аминьевское шоссе, 6',lat:55.706,lon:37.457,link:'https://citygolf.ru',img:'https://images.unsplash.com/photo-1587174486073-ae5e5cff23aa?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'2',title:'Спа с сауной и массажем',cat:'spa',desc:'Частная баня на двоих — сауна, хороший массаж. Подборка @svalika_wellbeing.',addr:'Москва',lat:55.749,lon:37.539,link:'https://www.instagram.com/p/DYSPIP8DaTf/',img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=600&q=80',liked:true,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'3',title:'Катер без прав — Строгино',cat:'active',desc:'Управляешь сам, права не нужны. Маршрут вдоль Серебряного бора.',addr:'Москва, Строгино, яхт-клуб Медуза',lat:55.789,lon:37.408,link:'https://thelodka.ru',img:'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'4',title:'Бурлеск-кабаре Гримёрка',cat:'culture',desc:'Пушечная, 9/6. Шоу «Мадам Бум» — живой джаз, блёстки, варьете 20-х. 18+.',addr:'Москва, Пушечная улица, 9/6',lat:55.757,lon:37.620,link:'https://grimerka.art/madamboom',img:'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'5',title:'Ресторан ИКРА',cat:'food',desc:'Большая Никитская, 5. Chef\'s table на 16 мест, сеты от Мухина и топ-шефов WRF.',addr:'Москва, Большая Никитская, 5',lat:55.755,lon:37.608,link:'',img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80',liked:true,done:true,planned:false,plannedDate:'',date:'2025-04-10',rating:4,review:'Очень атмосферно, сеты интересные.',dates:['2025-04-10'],deleted:false},
+  {id:'6',title:'Ресторан AYU',cat:'food',desc:'Романов пер., 2. Омакасэ 22 подачи, 300-летний кипарис хиноки, всего 12 мест.',addr:'Москва, Романов переулок, 2',lat:55.754,lon:37.608,link:'',img:'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&q=80',liked:true,done:true,planned:false,plannedDate:'',date:'2025-05-12',rating:5,review:'Лучший омакасэ в Москве. Обязательно повторим.',dates:['2025-05-12'],deleted:false},
+  {id:'7',title:'Ресторан Olluco',cat:'food',desc:'Даев пер., 19. Перуанская кухня от #1 в мире Вирхилио Мартинеса. Рейтинг 4.5.',addr:'Москва, Даев переулок, 19',lat:55.770,lon:37.638,link:'',img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80',liked:true,done:true,planned:false,plannedDate:'',date:'2025-03-05',rating:4,review:'Интересно, необычно. Порции маловаты.',dates:['2025-03-05'],deleted:false},
+  {id:'8',title:'Планетарий — вечер под куполом',cat:'culture',desc:'Садовая-Кудринская, 5. Программа «Только для вас» + Парк неба + Большая обсерватория.',addr:'Москва, Садовая-Кудринская, 5',lat:55.761,lon:37.583,link:'https://planetarium-moscow.ru',img:'https://images.unsplash.com/photo-1532798369041-b33eb576ef16?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'9',title:'Винная дегустация',cat:'food',desc:'Слепая дегустация у сомелье или в Wine & Corks — интереснее любого ресторана.',addr:'Москва',lat:55.760,lon:37.597,link:'',img:'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'10',title:'Матч: футбол / хоккей / теннис',cat:'sport',desc:'Лужники, ВТБ Арена — атмосфера живого матча не сравнима с телевизором.',addr:'Москва, стадион Лужники',lat:55.715,lon:37.556,link:'https://tickets.spartakmoscow.ru',img:'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'11',title:'Поездка в Казань',cat:'trip',desc:'Отель с панорамным выходом прямо на стадион — viral-рилс. Долететь 1 час.',addr:'Казань, стадион Ак Барс Арена',lat:55.800,lon:49.145,link:'https://www.instagram.com/reel/DX4qLTuRmEg/',img:'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80',liked:true,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'12',title:'Moscow Raceway — гонки',cat:'sport',desc:'Шелудьково, Подмосковье. Один из лучших треков России. Рейтинг 4.8.',addr:'Шелудьково, Московская область',lat:55.996,lon:36.270,link:'https://moscowraceway.ru',img:'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'13',title:'Вертолётный тур над Москвой',cat:'active',desc:'30–40 минут над Кремлём, рекой и Сити. Незабываемо — как раз ваш формат.',addr:'Москва, Ходынское поле',lat:55.790,lon:37.560,link:'',img:'https://images.unsplash.com/photo-1534481016308-0fca71578ae5?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'14',title:'Ужин на крыше / панорамный',cat:'food',desc:'Sixty, Babel или закрытые roof-вечера. Вид на всю Москву + хорошая кухня.',addr:'Москва, Пресненская набережная, 8',lat:55.748,lon:37.540,link:'',img:'https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'15',title:'Стрельба из лука / тир',cat:'active',desc:'Archery-клуб или закрытый тир — новый опыт вдвоём, азартно, не банально.',addr:'Москва',lat:55.657,lon:37.620,link:'',img:'https://images.unsplash.com/photo-1569517282132-25d22f4573e6?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'16',title:'Яхта или SUP на закате',cat:'active',desc:'Яхта с капитаном или SUP-доски по вечернему Строгино. Закат на воде.',addr:'Москва, Строгино',lat:55.792,lon:37.402,link:'',img:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'17',title:'Иммерсивный театр',cat:'culture',desc:'«Чёрная курица» или DetectivePro — история + живые актёры + загадки.',addr:'Москва',lat:55.759,lon:37.645,link:'',img:'https://images.unsplash.com/photo-1503095396549-807759245b35?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'18',title:'SPA-выходные — Foresta',cat:'trip',desc:'Foresta Festival Park — термы, баня, лес, коттеджи. Час от Москвы.',addr:'Прохорово, Подмосковье',lat:55.305,lon:37.631,link:'https://foresta.su',img:'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'19',title:'Конный выезд или параплан',cat:'active',desc:'Конная прогулка в Подмосковье или тандем на параплане с инструктором.',addr:'Подмосковье, Алабино',lat:55.600,lon:37.080,link:'',img:'https://images.unsplash.com/photo-1553284966-19b8815c7817?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
+  {id:'20',title:'Кино в Пионере',cat:'culture',desc:'Кутузовский, 21. Авторское кино, фестивальные хиты, коктейль-бар. Рейтинг 4.8.',addr:'Москва, Кутузовский проспект, 21',lat:55.745,lon:37.549,link:'https://pioner-cinema.ru',img:'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&q=80',liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false},
 ];
 
 let ideas=[], filter='all', pendingDeleteId=null, initialized=false;
 
-const urlParams=new URLSearchParams(window.location.search);
-const urlFilter=urlParams.get('filter');
+const urlFilter=new URLSearchParams(window.location.search).get('filter');
 if(urlFilter){filter=urlFilter;document.querySelectorAll('.fc').forEach(b=>{b.classList.remove('on');if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes("'"+urlFilter+"'"))b.classList.add('on');});}
 
 function setSyncStatus(s,t){document.getElementById('sync-dot').className='sync-dot'+(s==='syncing'?' syncing':s==='error'?' error':'');document.getElementById('sync-text').textContent=t;}
-
-function buildMapUrl(list){
-  const pts=list.filter(d=>d.lat&&d.lon&&!d.deleted).map(d=>{const m=catMeta[d.cat]||catMeta.active;return`${d.lon},${d.lat},${m.color}`;}).join('~');
-  return`https://yandex.ru/map-widget/v1/?ll=37.590,55.752&z=10&pt=${pts}`;
-}
 
 onValue(ideasRef,snap=>{
   const data=snap.val();
   if(data){ideas=Object.values(data).sort((a,b)=>Number(a.id)-Number(b.id));setSyncStatus('ok','Синхронизировано · '+new Date().toLocaleTimeString('ru',{hour:'2-digit',minute:'2-digit'}));}
   else if(!initialized){const obj={};SEED.forEach(s=>obj[s.id]=s);set(ideasRef,obj);}
   initialized=true;
-  render();renderHero();renderHistPreview();updateMap();
+  render();renderHero();renderHistPreview();
 },err=>setSyncStatus('error',err.message));
-
-function updateMap(){
-  const iframe=document.getElementById('map-iframe');
-  const url=buildMapUrl(ideas);
-  if(iframe.src!==url)iframe.src=url;
-}
 
 async function patch(id,data){setSyncStatus('syncing','Сохраняем...');await update(ref(db,'ideas/'+id),data);}
 
 function renderHero(){
   const block=document.getElementById('hero-block');
-  const planned=ideas.filter(d=>d.planned&&!d.deleted&&!d.done);
+  const planned=ideas.filter(d=>d.planned&&!d.deleted);
   const withDate=planned.filter(d=>d.plannedDate).sort((a,b)=>new Date(a.plannedDate)-new Date(b.plannedDate));
-  const withoutDate=planned.filter(d=>!d.plannedDate);
-  const next=withDate[0]||withoutDate[0];
-
+  const next=withDate[0]||planned.filter(d=>!d.plannedDate)[0];
   if(next){
     block.style.display='block';
     const m=catMeta[next.cat]||catMeta.active;
     document.getElementById('hero-eyebrow').textContent='Следующее свидание';
     document.getElementById('hero-thumb').innerHTML=next.img?`<img src="${next.img}" alt="${next.title}" onerror="this.outerHTML='<div class=hero-thumb-ph>${m.emoji}</div>'">`:`<div class="hero-thumb-ph">${m.emoji}</div>`;
-    if(next.plannedDate){const d=new Date(next.plannedDate);document.getElementById('hero-date').textContent=d.toLocaleDateString('ru',{day:'numeric',month:'long'});document.getElementById('hero-date').className='hero-date';}
-    else{document.getElementById('hero-date').textContent='Дата не выбрана';document.getElementById('hero-date').className='hero-date muted';}
+    document.getElementById('hero-date').className=next.plannedDate?'hero-date':'hero-date muted';
+    document.getElementById('hero-date').textContent=next.plannedDate?new Date(next.plannedDate).toLocaleDateString('ru',{day:'numeric',month:'long'}):'Дата не выбрана';
     document.getElementById('hero-place').textContent=next.title;
     document.getElementById('hero-action').innerHTML=next.plannedDate?`<a class="hero-link" href="idea.html?id=${next.id}">Открыть →</a>`:`<button class="hero-choose" onclick="openPlanModal('${next.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Выбрать дату</button>`;
     document.getElementById('nudge').style.display='none';
   } else {
-    const done=ideas.filter(d=>d.done&&d.date&&!d.deleted).sort((a,b)=>new Date(b.date)-new Date(a.date));
-    const last=done[0];
+    const last=ideas.filter(d=>d.done&&d.date&&!d.deleted).sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
     if(last){
       block.style.display='block';
       const m=catMeta[last.cat]||catMeta.active;
       document.getElementById('hero-eyebrow').textContent='';
       document.getElementById('hero-thumb').innerHTML=last.img?`<img src="${last.img}" alt="${last.title}" onerror="this.outerHTML='<div class=hero-thumb-ph>${m.emoji}</div>'">`:`<div class="hero-thumb-ph">${m.emoji}</div>`;
-      const d=new Date(last.date);
-      document.getElementById('hero-date').textContent=d.toLocaleDateString('ru',{day:'numeric',month:'long'});
       document.getElementById('hero-date').className='hero-date';
+      document.getElementById('hero-date').textContent=new Date(last.date).toLocaleDateString('ru',{day:'numeric',month:'long'});
       document.getElementById('hero-place').textContent=last.title;
       document.getElementById('hero-action').innerHTML=`<a class="hero-link" href="idea.html?id=${last.id}">Вот как это было →</a>`;
       const days=Math.floor((Date.now()-new Date(last.date))/86400000);
@@ -406,35 +341,40 @@ function renderHero(){
 function getFiltered(){
   return ideas.filter(d=>{
     if(d.deleted)return false;
+    // hide done (non-planned) from main list
     if(d.done&&!d.planned&&filter!=='done')return false;
     if(filter==='all')return true;
     if(filter==='liked')return d.liked;
+    if(filter==='planned')return d.planned;
     if(filter==='done')return d.done;
     return d.cat===filter;
   });
 }
 
-function svgHeart(liked){return liked?`<svg width="22" height="22" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="#e8304a" stroke-width="1.8" fill="#e8304a" stroke-linecap="round" stroke-linejoin="round"/></svg>`:`<svg width="22" height="22" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;}
+function svgHeart(on){return on?`<svg width="22" height="22" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="#e8304a" stroke-width="1.8" fill="#e8304a" stroke-linecap="round" stroke-linejoin="round"/></svg>`:`<svg width="22" height="22" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;}
 function svgDel(){return`<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><polyline points="3 6 5 6 21 6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M19 6l-1 14H6L5 6" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 11v6M14 11v6" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M9 6V4h6v2" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;}
 function svgEdit(){return`<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;}
 function svgCal(dark){const c=dark?'var(--black)':'#fff';return`<svg width="11" height="11" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="${c}" stroke-width="1.8"/><line x1="16" y1="2" x2="16" y2="6" stroke="${c}" stroke-width="1.8"/><line x1="8" y1="2" x2="8" y2="6" stroke="${c}" stroke-width="1.8"/><line x1="3" y1="10" x2="21" y2="10" stroke="${c}" stroke-width="1.8"/></svg>`;}
 
 function buildCard(d){
   const m=catMeta[d.cat]||catMeta.active;
-  let planHtml='';
-  if(d.done){
-    // пройденное: показываем кнопку "Повторить" = запланировать снова
-    planHtml=`<div class="card-done-badge">✓ были</div>
-    <div class="c-plan-btn" onclick="event.stopPropagation();openPlanModal('${d.id}','repeat')">${svgCal()} Повторить</div>`;
+  let bottom='';
+  if(d.done&&!d.planned){
+    // пройденное — показываем были + повторить (= снова запланировать)
+    const times=(d.dates||[]).length;
+    bottom=`<div class="card-done-badge">✓ были${times>1?' · ×'+times:''}</div>
+    <div class="c-repeat-btn" onclick="event.stopPropagation();openPlanModal('${d.id}','repeat')">↩ Повторить</div>`;
   } else if(d.planned){
-    if(d.plannedDate){const pd=new Date(d.plannedDate);planHtml=`<div class="c-planned-badge">${svgCal(true)} ${pd.toLocaleDateString('ru',{day:'numeric',month:'short'})}</div>`;}
-    else planHtml=`<div class="c-planned-badge">${svgCal(true)} Запланировано</div><div class="c-plan-date-link" onclick="event.stopPropagation();openPlanModal('${d.id}')">Выбрать дату →</div>`;
+    const dateStr=d.plannedDate?new Date(d.plannedDate).toLocaleDateString('ru',{day:'numeric',month:'short'}):'';
+    bottom=`<div class="c-planned-wrap">
+      <div class="c-planned-badge">${svgCal(true)} ${dateStr||'Запланировано'}</div>
+      <button class="c-cancel-plan" onclick="event.stopPropagation();cancelPlan('${d.id}')">Отменить план</button>
+    </div>`;
   } else {
-    planHtml=`<div class="c-plan-btn" onclick="event.stopPropagation();openPlanModal('${d.id}')">${svgCal()} Запланировать</div>`;
+    bottom=`<div class="c-plan-btn" onclick="event.stopPropagation();openPlanModal('${d.id}')">${svgCal()} Запланировать</div>`;
   }
   return`<div class="card" onclick="goIdea('${d.id}')">
-    ${d.img?`<img class="card-img" src="${d.img}" alt="${d.title}" loading="lazy" onerror="this.style.display='none'">`:''}
-    ${!d.img?`<div class="card-emoji">${m.emoji}</div>`:''}
+    ${d.img?`<img class="card-img" src="${d.img}" alt="${d.title}" loading="lazy" onerror="this.style.display='none'">`:`<div class="card-emoji">${m.emoji}</div>`}
     <div class="card-overlay"></div>
     <div class="ic ic-heart" onclick="event.stopPropagation();toggleLike('${d.id}')">${svgHeart(d.liked)}</div>
     <div class="ic ic-del" onclick="event.stopPropagation();askDelete('${d.id}')">${svgDel()}</div>
@@ -443,7 +383,7 @@ function buildCard(d){
       <div class="card-cat">${m.label}</div>
       <div class="card-title">${d.title}</div>
       <div class="card-desc">${d.desc||''}</div>
-      ${planHtml}
+      ${bottom}
     </div>
   </div>`;
 }
@@ -462,10 +402,11 @@ function renderHistPreview(){
     const m=catMeta[d.cat]||catMeta.active;
     const stars=d.rating?'★'.repeat(d.rating)+'☆'.repeat(5-d.rating):'';
     const dateStr=new Date(d.date).toLocaleDateString('ru',{day:'numeric',month:'short',year:'numeric'});
+    const times=(d.dates||[]).length;
     return`<div class="hist-item" onclick="goIdea('${d.id}')">
       <div class="hist-thumb">${d.img?`<img src="${d.img}" alt="${d.title}" loading="lazy" onerror="this.outerHTML='<div class=hist-thumb-ph>${m.emoji}</div>'">`:`<div class="hist-thumb-ph">${m.emoji}</div>`}</div>
       <div class="hist-right">
-        <div class="hist-date-sm">${dateStr}</div>
+        <div class="hist-date-sm">${dateStr}${times>1?' · ×'+times:''}</div>
         <div class="hist-title-sm">${d.title}</div>
         ${stars?`<div class="hist-stars-sm">${stars}</div>`:''}
         ${d.review?`<div class="hist-review-sm">${d.review}</div>`:''}
@@ -480,6 +421,9 @@ window.toggleLike=async id=>{const d=ideas.find(x=>x.id===id);if(d)await patch(i
 window.askDelete=id=>{pendingDeleteId=id;document.getElementById('confirm-modal').classList.add('show');};
 window.confirmDelete=async()=>{if(!pendingDeleteId)return;await patch(pendingDeleteId,{deleted:true});closeModal('confirm-modal');};
 
+// Отменить план — возвращает в список идей
+window.cancelPlan=async id=>{await patch(id,{planned:false,plannedDate:'',done:false});};
+
 window.setFilter=(f,btn)=>{
   filter=f;
   document.querySelectorAll('.fc').forEach(b=>b.classList.remove('on'));
@@ -490,19 +434,26 @@ window.setFilter=(f,btn)=>{
   render();
 };
 
-// «Повторить» = открыть план-модал с пометкой repeat
+// Повторить = запланировать снова (идея уже done, остаётся done, добавляем plan)
 window.openPlanModal=(id,mode)=>{
   document.getElementById('plan-id').value=id;
   document.getElementById('plan-date-input').value='';
   document.getElementById('plan-date-input').style.display='none';
-  document.getElementById('plan-modal-title').textContent=mode==='repeat'?'Повторить свидание':'Запланировать';
+  document.getElementById('plan-modal-title').textContent=mode==='repeat'?'Запланировать повторно':'Запланировать';
   document.getElementById('plan-modal').classList.add('show');
 };
 
 window.togglePlanDate=()=>{
   const inp=document.getElementById('plan-date-input');
   inp.style.display=inp.style.display==='none'?'block':'none';
-  if(inp.style.display==='block'){inp.focus();inp.onchange=async()=>{const id=document.getElementById('plan-id').value;await patch(id,{planned:true,plannedDate:inp.value});closeModal('plan-modal');};}
+  if(inp.style.display==='block'){
+    inp.focus();
+    inp.onchange=async()=>{
+      const id=document.getElementById('plan-id').value;
+      await patch(id,{planned:true,plannedDate:inp.value});
+      closeModal('plan-modal');
+    };
+  }
 };
 
 window.planWithoutDate=async()=>{
@@ -521,7 +472,6 @@ window.openAddModal=()=>{
   document.getElementById('f-cat').value='active';
   document.getElementById('add-modal').classList.add('show');
 };
-
 window.openEditModal=id=>{
   const d=ideas.find(x=>x.id===id);if(!d)return;
   document.getElementById('modal-title').textContent='Редактировать';
@@ -534,17 +484,14 @@ window.openEditModal=id=>{
   document.getElementById('f-link').value=d.link||'';
   document.getElementById('add-modal').classList.add('show');
 };
-
 window.closeModal=id=>{document.getElementById(id).classList.remove('show');};
-
 window.saveIdea=async()=>{
   const title=document.getElementById('f-title').value.trim();if(!title)return;
   const editId=document.getElementById('edit-id').value;
   if(editId){await patch(editId,{title,desc:document.getElementById('f-desc').value.trim(),cat:document.getElementById('f-cat').value,img:document.getElementById('f-img').value.trim(),addr:document.getElementById('f-addr').value.trim(),link:document.getElementById('f-link').value.trim()});}
-  else{const newId=String(Date.now());await set(ref(db,'ideas/'+newId),{id:newId,title,desc:document.getElementById('f-desc').value.trim(),cat:document.getElementById('f-cat').value,img:document.getElementById('f-img').value.trim(),addr:document.getElementById('f-addr').value.trim(),link:document.getElementById('f-link').value.trim(),lat:55.751,lon:37.618,liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',times:0,deleted:false});}
+  else{const newId=String(Date.now());await set(ref(db,'ideas/'+newId),{id:newId,title,desc:document.getElementById('f-desc').value.trim(),cat:document.getElementById('f-cat').value,img:document.getElementById('f-img').value.trim(),addr:document.getElementById('f-addr').value.trim(),link:document.getElementById('f-link').value.trim(),lat:55.751,lon:37.618,liked:false,done:false,planned:false,plannedDate:'',date:'',rating:0,review:'',dates:[],deleted:false});}
   closeModal('add-modal');
 };
-
 ['add-modal','plan-modal','confirm-modal'].forEach(id=>{
   document.getElementById(id).addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal(id);});
 });

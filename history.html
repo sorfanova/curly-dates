@@ -2,8 +2,10 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Наша история — Кучерявые свидания</title>
+<script>const _p="memory";if(localStorage.getItem("curly_auth")!==_p){const inp=prompt("Введите пароль:");if(inp===_p){localStorage.setItem("curly_auth",_p);}else{document.body.innerHTML="<div style='display:flex;align-items:center;justify-content:center;height:100vh;font-family:Georgia,serif;color:#999;font-size:14px'>Неверный пароль</div>";throw new Error("auth");}}</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{--black:#0f0f0f;--white:#fafaf8;--cream:#f4f1ec;--muted:#999;--border:rgba(15,15,15,.1);--font-display:'Cormorant Garamond',serif;--font-body:'Geologica',sans-serif}
@@ -19,7 +21,6 @@ body{font-family:var(--font-body);background:var(--white);color:var(--black);min
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .content{max-width:800px;margin:0 auto;padding:0 16px 48px}
 .empty{text-align:center;padding:4rem 1rem;color:var(--muted);font-size:13px;font-weight:300}
-
 .hist-item{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:opacity .2s}
 .hist-item:hover{opacity:.75}
 .hist-item:last-child{border-bottom:none}
@@ -27,26 +28,24 @@ body{font-family:var(--font-body);background:var(--white);color:var(--black);min
 .hist-thumb img{width:100%;height:100%;object-fit:cover;display:block}
 .hist-thumb-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:32px}
 .hist-right{flex:1;padding-top:2px}
-.hist-date{font-size:9px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px;font-family:var(--font-body)}
-.hist-title{font-family:var(--font-display);font-size:20px;font-weight:500;color:var(--black);margin-bottom:4px;line-height:1.2}
-.hist-cat{font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px;font-family:var(--font-body)}
+.hist-date{font-size:9px;color:var(--muted);letter-spacing:.07em;text-transform:uppercase;margin-bottom:4px}
+.hist-title{font-family:var(--font-display);font-size:20px;font-weight:500;margin-bottom:4px;line-height:1.2}
+.hist-cat{font-size:10px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
 .hist-stars{font-size:14px;color:#FDD663;letter-spacing:-1px;margin-bottom:5px}
 .hist-review{font-size:12px;color:#555;line-height:1.5;font-weight:300;margin-bottom:8px}
 .hist-actions{display:flex;gap:8px;flex-wrap:wrap}
-.btn-repeat{padding:7px 14px;background:var(--black);color:var(--white);border:none;font-family:var(--font-body);font-size:11px;cursor:pointer;letter-spacing:.06em}
+.btn-repeat{padding:7px 14px;background:var(--black);color:#fff;border:none;font-family:var(--font-body);font-size:11px;cursor:pointer;letter-spacing:.06em}
 .btn-repeat:hover{opacity:.8}
 .btn-open{padding:7px 14px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:11px;cursor:pointer;letter-spacing:.06em}
-
-/* PLAN MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:flex-end;justify-content:center}
 .modal-bg.show{display:flex}
 @media(min-width:600px){.modal-bg{align-items:center}}
 .plan-modal{background:var(--white);width:100%;max-width:360px;padding:28px 20px;margin:16px}
 .plan-modal h3{font-family:var(--font-display);font-size:20px;font-weight:500;margin-bottom:6px}
 .plan-modal p{font-size:12px;color:var(--muted);margin-bottom:20px;font-weight:300;line-height:1.5}
-.plan-date-input{width:100%;font-size:13px;font-family:var(--font-body);padding:10px 12px;border:1px solid var(--border);background:var(--cream);color:var(--black);outline:none;margin-bottom:10px;display:none}
+.plan-date-input{width:100%;font-size:13px;font-family:var(--font-body);padding:10px 12px;border:1px solid var(--border);background:var(--cream);color:var(--black);outline:none;margin-bottom:10px;display:none;-webkit-appearance:none}
 .plan-btns{display:flex;flex-direction:column;gap:8px}
-.btn-plan-confirm{padding:11px;background:var(--black);color:var(--white);border:none;font-family:var(--font-body);font-size:12px;cursor:pointer;letter-spacing:.06em;text-align:left}
+.btn-plan-confirm{padding:11px;background:var(--black);color:#fff;border:none;font-family:var(--font-body);font-size:12px;cursor:pointer;letter-spacing:.06em;text-align:left}
 .btn-plan-later{padding:11px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;cursor:pointer;letter-spacing:.06em;text-align:left}
 .btn-cancel-form{padding:11px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;cursor:pointer}
 </style>
@@ -65,10 +64,9 @@ body{font-family:var(--font-body);background:var(--white);color:var(--black);min
 </div>
 <div class="content" id="content"><div class="empty">Загрузка...</div></div>
 
-<!-- PLAN MODAL -->
 <div class="modal-bg" id="plan-modal">
   <div class="plan-modal">
-    <h3>Повторить свидание</h3>
+    <h3>Запланировать повторно</h3>
     <p>Выберите дату или добавьте в план — определитесь позже</p>
     <input type="hidden" id="plan-id">
     <input type="date" class="plan-date-input" id="plan-date-input">
@@ -87,9 +85,7 @@ const app=initializeApp({databaseURL:"https://curly-dates-default-rtdb.europe-we
 const db=getDatabase(app);
 const catMeta={active:{label:'Активное',emoji:'🎯'},trip:{label:'Поездка',emoji:'✈️'},food:{label:'Ресторан',emoji:'🍽️'},sport:{label:'Спорт',emoji:'⚡'},culture:{label:'Культура',emoji:'🎭'},spa:{label:'Спа',emoji:'🛁'}};
 let ideas=[];
-
-function setSyncStatus(s,t){document.getElementById('sync-dot').className='sync-dot'+(s==='syncing'?' syncing':s==='error'?' error':'');document.getElementById('sync-text').textContent=t;}
-
+function setSyncStatus(s,t){document.getElementById('sync-dot').className='sync-dot'+(s==='syncing'?' syncing':'');document.getElementById('sync-text').textContent=t;}
 onValue(ref(db,'ideas'),snap=>{
   const data=snap.val();
   ideas=data?Object.values(data).filter(d=>d.done&&d.date&&!d.deleted).sort((a,b)=>new Date(b.date)-new Date(a.date)):[];
@@ -103,10 +99,12 @@ function render(){
     const m=catMeta[d.cat]||catMeta.active;
     const stars=d.rating?'★'.repeat(d.rating)+'☆'.repeat(5-d.rating):'';
     const dateStr=new Date(d.date).toLocaleDateString('ru',{day:'numeric',month:'long',year:'numeric'});
+    // Счётчик = количество уникальных дат в массиве dates
+    const times=(d.dates||[]).length;
     return`<div class="hist-item" onclick="window.location.href='idea.html?id=${d.id}'">
       <div class="hist-thumb">${d.img?`<img src="${d.img}" alt="${d.title}" loading="lazy" onerror="this.outerHTML='<div class=hist-thumb-ph>${m.emoji}</div>'">`:`<div class="hist-thumb-ph">${m.emoji}</div>`}</div>
       <div class="hist-right">
-        <div class="hist-date">${dateStr}${(d.times||0)>1?' · были ×'+d.times:''}</div>
+        <div class="hist-date">${dateStr}${times>1?' · были ×'+times:''}</div>
         <div class="hist-title">${d.title}</div>
         <div class="hist-cat">${m.label}</div>
         ${stars?`<div class="hist-stars">${stars}</div>`:''}
@@ -131,11 +129,7 @@ window.togglePlanDate=()=>{
   inp.style.display=inp.style.display==='none'?'block':'none';
   if(inp.style.display==='block'){inp.focus();inp.onchange=async()=>{const id=document.getElementById('plan-id').value;await update(ref(db,'ideas/'+id),{planned:true,plannedDate:inp.value});closeModal();};}
 };
-window.planWithoutDate=async()=>{
-  const id=document.getElementById('plan-id').value;
-  await update(ref(db,'ideas/'+id),{planned:true,plannedDate:''});
-  closeModal();
-};
+window.planWithoutDate=async()=>{const id=document.getElementById('plan-id').value;await update(ref(db,'ideas/'+id),{planned:true,plannedDate:''});closeModal();};
 window.closeModal=()=>document.getElementById('plan-modal').classList.remove('show');
 document.getElementById('plan-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
 </script>

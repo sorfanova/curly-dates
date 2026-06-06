@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Идеи на карте — Кучерявые свидания</title>
+<script>const _p="memory";if(localStorage.getItem("curly_auth")!==_p){const inp=prompt("Введите пароль:");if(inp===_p){localStorage.setItem("curly_auth",_p);}else{document.body.innerHTML="<div style='display:flex;align-items:center;justify-content:center;height:100vh;font-family:Georgia,serif;color:#999;font-size:14px'>Неверный пароль</div>";throw new Error("auth");}}</script>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--black:#0f0f0f;--white:#fafaf8;--cream:#f4f1ec;--muted:#999;--border:rgba(15,15,15,.1);--font-display:'Cormorant Garamond',serif;--font-body:'Geologica',sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-body);background:var(--white);color:var(--black);min-height:100vh;display:flex;flex-direction:column}
+.header{padding:24px 16px 20px;max-width:800px;width:100%;margin:0 auto;display:flex;align-items:center;gap:16px;border-bottom:1px solid var(--border)}
+.back{color:var(--black);font-size:22px;opacity:.5;line-height:1;text-decoration:none;flex-shrink:0}
+.header-text h1{font-family:var(--font-display);font-size:26px;font-weight:500}
+.header-text p{font-size:11px;color:var(--muted);margin-top:3px;font-weight:300}
+.sync-bar{padding:8px 16px;max-width:800px;width:100%;margin:0 auto;display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted)}
+.sync-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;flex-shrink:0}
+.sync-dot.syncing{background:#f59e0b;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+#ymap{flex:1;width:100%;min-height:calc(100vh - 140px)}
+.legend{padding:12px 16px;display:flex;gap:14px;flex-wrap:wrap;border-top:1px solid var(--border);background:var(--white)}
+.ml{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);font-family:var(--font-body)}
+.mld{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="header">
+  <a class="back" href="index.html">←</a>
+  <div class="header-text">
+    <h1>Идеи на карте</h1>
+    <p>Все места — нажми на точку чтобы открыть</p>
+  </div>
+</div>
+<div class="sync-bar">
+  <div class="sync-dot syncing" id="sync-dot"></div>
+  <span id="sync-text">Загрузка...</span>
+</div>
+<div id="ymap"></div>
+<div class="legend">
+  <div class="ml"><div class="mld" style="background:#e8304a"></div>Рестораны</div>
+  <div class="ml"><div class="mld" style="background:#1a6ef0"></div>Культура</div>
+  <div class="ml"><div class="mld" style="background:#22c55e"></div>Спорт</div>
+  <div class="ml"><div class="mld" style="background:#f59e0b"></div>Активное</div>
+  <div class="ml"><div class="mld" style="background:#8b5cf6"></div>Поездки</div>
+  <div class="ml"><div class="mld" style="background:#10b981"></div>Спа</div>
+  <div class="ml"><div class="mld" style="background:#e8304a;opacity:.4;outline:2px solid #e8304a"></div>Запланировано</div>
+</div>
+
+<script src="https://api-maps.yandex.ru/2.1/?apikey=3721b472-c7ca-4adf-824d-50a59f74f1d3&lang=ru_RU"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+const app=initializeApp({databaseURL:"https://curly-dates-default-rtdb.europe-west1.firebasedatabase.app/"});
+const db=getDatabase(app);
+
+const catColors={active:'#f59e0b',trip:'#8b5cf6',food:'#e8304a',sport:'#22c55e',culture:'#1a6ef0',spa:'#10b981'};
+const catMeta={active:{label:'Активное',emoji:'🎯'},trip:{label:'Поездка',emoji:'✈️'},food:{label:'Ресторан',emoji:'🍽️'},sport:{label:'Спорт',emoji:'⚡'},culture:{label:'Культура',emoji:'🎭'},spa:{label:'Спа',emoji:'🛁'}};
+
+function setSyncStatus(s,t){document.getElementById('sync-dot').className='sync-dot'+(s==='syncing'?' syncing':'');document.getElementById('sync-text').textContent=t;}
+
+let ymap=null, ideas=[], geocoding=false;
+
+ymaps.ready(()=>{
+  ymap=new ymaps.Map('ymap',{center:[55.751,37.618],zoom:10,controls:['zoomControl','geolocationControl']},{suppressMapOpenBlock:true});
+  loadData();
+});
+
+async function geocodeIdea(idea){
+  if(!idea.addr||idea.lat)return idea;
+  try{
+    const res=await ymaps.geocode(idea.addr,{results:1});
+    const obj=res.geoObjects.get(0);
+    if(obj){const c=obj.geometry.getCoordinates();await update(ref(db,'ideas/'+idea.id),{lat:c[0],lon:c[1]});return{...idea,lat:c[0],lon:c[1]};}
+  }catch(e){}
+  return idea;
+}
+
+function loadData(){
+  onValue(ref(db,'ideas'),async snap=>{
+    const data=snap.val();
+    if(!data){setSyncStatus('ok','Нет данных');return;}
+    ideas=Object.values(data).filter(d=>!d.deleted);
+
+    // Геокодируем те у кого нет координат
+    const needGeo=ideas.filter(d=>d.addr&&!d.lat&&!d.lon);
+    if(needGeo.length&&!geocoding){
+      geocoding=true;
+      setSyncStatus('syncing','Определяем координаты...');
+      for(const idea of needGeo){
+        const updated=await geocodeIdea(idea);
+        const idx=ideas.findIndex(x=>x.id===idea.id);
+        if(idx>=0)ideas[idx]=updated;
+      }
+      geocoding=false;
+    }
+    setSyncStatus('ok','Синхронизировано');
+    renderMap();
+  });
+}
+
+function renderMap(){
+  if(!ymap)return;
+  ymap.geoObjects.removeAll();
+  const withCoords=ideas.filter(d=>d.lat&&d.lon);
+  withCoords.forEach(d=>{
+    const m=catMeta[d.cat]||catMeta.active;
+    const color=d.planned?'#22c55e':d.done?'#888':catColors[d.cat]||'#999';
+    const pm=new ymaps.Placemark([d.lat,d.lon],{
+      balloonContentHeader:`<b style="font-size:13px;font-family:Georgia,serif">${d.title}</b>`,
+      balloonContentBody:`<div style="font-size:11px;color:#555;margin:4px 0">${d.desc||''}</div>${d.done?'<span style="font-size:10px;color:#22c55e">✓ были</span>':d.planned?'<span style="font-size:10px;color:#1a6ef0">📅 запланировано</span>':''}`,
+      balloonContentFooter:`<a href="idea.html?id=${d.id}" style="font-size:11px;color:#0f0f0f;border-bottom:1px solid rgba(0,0,0,.3)">Открыть →</a>`,
+      hintContent:d.title,
+    },{preset:'islands#circleDotIcon',iconColor:color});
+    ymap.geoObjects.add(pm);
+  });
+  if(withCoords.length>1){
+    try{const b=ymap.geoObjects.getBounds();if(b)ymap.setBounds(b,{checkZoomRange:true,zoomMargin:60});}catch(e){}
+  }
+}
+</script>
+</body>
+</html>
