@@ -115,7 +115,7 @@ function render(){
     </div>`;
   }).join('');
 }
-window.openPlan=id=>{document.getElementById('plan-id').value=id;document.getElementById('plan-date-input').value='';document.getElementById('plan-date-input').style.display='none';document.getElementById('plan-modal').classList.add('show');};
+window.openPlan=async id=>{await update(ref(db,'ideas/'+id),{repeat:true});};
 window.togglePlanDate=()=>{const inp=document.getElementById('plan-date-input');inp.style.display=inp.style.display==='none'?'block':'none';if(inp.style.display==='block'){inp.focus();inp.onchange=async()=>{const id=document.getElementById('plan-id').value;await update(ref(db,'ideas/'+id),{planned:true,plannedDate:inp.value,repeat:true});closeModal();};}};
 window.planWithoutDate=async()=>{const id=document.getElementById('plan-id').value;await update(ref(db,'ideas/'+id),{planned:true,plannedDate:'',repeat:true});closeModal();};
 window.closeModal=()=>document.getElementById('plan-modal').classList.remove('show');

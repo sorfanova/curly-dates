@@ -220,7 +220,7 @@ function renderPage(){
   } else if(idea.done&&!idea.repeat){
     planBlock=`
       <div class="action-row">
-        <button class="btn-action" onclick="openPlanModal()">↩ Повторить</button>
+        <button class="btn-action" onclick="doRepeat()">↩ Повторить</button>
         ${ymap_url?`<a class="btn-action" href="${ymap_url}" target="_blank"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>На карте</a>`:''}
         ${idea.link?`<a class="btn-action" href="${idea.link}" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Сайт</a>`:''}
       </div>`;
@@ -270,7 +270,7 @@ function renderPage(){
       <input class="date-input" type="date" id="date-input" value="${idea.date||''}" onchange="saveDate(this.value)">
       ${dateStr?`<span style="font-size:12px;color:var(--muted)">${dateStr}</span>`:''}
     </div>
-    ${times>1?`<div class="dates-list">Были ${times} раза: ${dates.map(d=>formatDate(d,{day:'numeric',month:'short',year:'numeric'})).join(', ')}</div>`:''}
+    ${dates.length>0?`<div class="dates-list">${dates.map(d=>formatDate(d,{day:'numeric',month:'long',year:'numeric'})).join(' · ')}</div>`:''}
     `:''}
 
     <div class="divider"></div>
@@ -316,7 +316,7 @@ window.markDone=async()=>{
   await patch({done:true,planned:false,plannedDate:'',repeat:false,date:dateStr,dates});
 };
 
-window.cancelPlan=async()=>{await patch({planned:false,plannedDate:'',repeat:false});};
+window.cancelPlan=async()=>{await patch({planned:false,plannedDate:'',repeat:false});};window.doRepeat=async()=>{await patch({repeat:true});};
 window.savePlannedDate=async val=>{await patch({plannedDate:val});};
 
 window.openPlanModal=()=>{
