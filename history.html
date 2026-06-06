@@ -63,7 +63,6 @@ body{font-family:var(--font-body);background:var(--white);color:var(--black);min
   <span id="sync-text">Загрузка...</span>
 </div>
 <div class="content" id="content"><div class="empty">Загрузка...</div></div>
-
 <div class="modal-bg" id="plan-modal">
   <div class="plan-modal">
     <h3>Запланировать повторно</h3>
@@ -77,7 +76,6 @@ body{font-family:var(--font-body);background:var(--white);color:var(--black);min
     </div>
   </div>
 </div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -86,20 +84,20 @@ const db=getDatabase(app);
 const catMeta={active:{label:'Активное',emoji:'🎯'},trip:{label:'Поездка',emoji:'✈️'},food:{label:'Ресторан',emoji:'🍽️'},sport:{label:'Спорт',emoji:'⚡'},culture:{label:'Культура',emoji:'🎭'},spa:{label:'Спа',emoji:'🛁'}};
 let ideas=[];
 function setSyncStatus(s,t){document.getElementById('sync-dot').className='sync-dot'+(s==='syncing'?' syncing':'');document.getElementById('sync-text').textContent=t;}
+function parseDate(str){if(!str)return null;const[y,m,d]=str.split('-');return new Date(+y,+m-1,+d);}
+function formatDate(str,opts){const d=parseDate(str);return d?d.toLocaleDateString('ru',opts):'';}
 onValue(ref(db,'ideas'),snap=>{
   const data=snap.val();
-  ideas=data?Object.values(data).filter(d=>d.done&&d.date&&!d.deleted).sort((a,b)=>new Date(b.date)-new Date(a.date)):[];
+  ideas=data?Object.values(data).filter(d=>d.done&&d.date&&!d.deleted).sort((a,b)=>parseDate(b.date)-parseDate(a.date)):[];
   setSyncStatus('ok','Синхронизировано');render();
 },err=>setSyncStatus('error',err.message));
-
 function render(){
   const el=document.getElementById('content');
   if(!ideas.length){el.innerHTML='<div class="empty">Пока не было ни одного свидания — всё впереди ✨</div>';return;}
   el.innerHTML=ideas.map(d=>{
     const m=catMeta[d.cat]||catMeta.active;
     const stars=d.rating?'★'.repeat(d.rating)+'☆'.repeat(5-d.rating):'';
-    const dateStr=new Date(d.date).toLocaleDateString('ru',{day:'numeric',month:'long',year:'numeric'});
-    // Счётчик = количество уникальных дат в массиве dates
+    const dateStr=formatDate(d.date,{day:'numeric',month:'long',year:'numeric'});
     const times=(d.dates||[]).length;
     return`<div class="hist-item" onclick="window.location.href='idea.html?id=${d.id}'">
       <div class="hist-thumb">${d.img?`<img src="${d.img}" alt="${d.title}" loading="lazy" onerror="this.outerHTML='<div class=hist-thumb-ph>${m.emoji}</div>'">`:`<div class="hist-thumb-ph">${m.emoji}</div>`}</div>
@@ -117,19 +115,9 @@ function render(){
     </div>`;
   }).join('');
 }
-
-window.openPlan=id=>{
-  document.getElementById('plan-id').value=id;
-  document.getElementById('plan-date-input').value='';
-  document.getElementById('plan-date-input').style.display='none';
-  document.getElementById('plan-modal').classList.add('show');
-};
-window.togglePlanDate=()=>{
-  const inp=document.getElementById('plan-date-input');
-  inp.style.display=inp.style.display==='none'?'block':'none';
-  if(inp.style.display==='block'){inp.focus();inp.onchange=async()=>{const id=document.getElementById('plan-id').value;await update(ref(db,'ideas/'+id),{planned:true,plannedDate:inp.value});closeModal();};}
-};
-window.planWithoutDate=async()=>{const id=document.getElementById('plan-id').value;await update(ref(db,'ideas/'+id),{planned:true,plannedDate:''});closeModal();};
+window.openPlan=id=>{document.getElementById('plan-id').value=id;document.getElementById('plan-date-input').value='';document.getElementById('plan-date-input').style.display='none';document.getElementById('plan-modal').classList.add('show');};
+window.togglePlanDate=()=>{const inp=document.getElementById('plan-date-input');inp.style.display=inp.style.display==='none'?'block':'none';if(inp.style.display==='block'){inp.focus();inp.onchange=async()=>{const id=document.getElementById('plan-id').value;await update(ref(db,'ideas/'+id),{planned:true,plannedDate:inp.value,repeat:true});closeModal();};}};
+window.planWithoutDate=async()=>{const id=document.getElementById('plan-id').value;await update(ref(db,'ideas/'+id),{planned:true,plannedDate:'',repeat:true});closeModal();};
 window.closeModal=()=>document.getElementById('plan-modal').classList.remove('show');
 document.getElementById('plan-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
 </script>

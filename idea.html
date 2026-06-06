@@ -5,51 +5,68 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Идея — Кучерявые свидания</title>
+<script>const _p="ВАШ_ПАРОЛЬ";if(localStorage.getItem("curly_auth")!==_p){const inp=prompt("Введите пароль:");if(inp===_p){localStorage.setItem("curly_auth",_p);}else{document.body.innerHTML="<div style='display:flex;align-items:center;justify-content:center;height:100vh;font-family:Georgia,serif;color:#999;font-size:14px'>Неверный пароль</div>";throw new Error("auth");}}</script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{--black:#0f0f0f;--white:#fafaf8;--cream:#f4f1ec;--muted:#999;--border:rgba(15,15,15,.1);--font-display:'Cormorant Garamond',serif;--font-body:'Geologica',sans-serif}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-body);background:var(--white);color:var(--black);min-height:100vh}
 .hero{position:relative;width:100%;height:55vw;max-height:420px;background:var(--cream);overflow:hidden}
-.hero-img{width:100%;height:100%;object-fit:cover;display:block}
-.hero-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:80px}
-.hero-back{position:absolute;top:16px;left:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.88);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--black);text-decoration:none;z-index:2;filter:drop-shadow(0 1px 4px rgba(0,0,0,.2))}
+.hero img{width:100%;height:100%;object-fit:cover;display:block}
+/* эмодзи только как fallback — скрыт если фото есть */
+.hero-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:80px;z-index:0}
+.hero img+.hero-emoji{display:none}
+.hero-back{position:absolute;top:16px;left:16px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.88);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--black);text-decoration:none;z-index:2}
 .hero-like{position:absolute;top:16px;right:16px;z-index:2;background:none;border:none;padding:0;cursor:pointer;filter:drop-shadow(0 1px 4px rgba(0,0,0,.4))}
-.content{max-width:800px;margin:0 auto;padding:24px 16px 48px}
+.content{max-width:800px;margin:0 auto;padding:20px 16px 48px}
 .idea-cat{font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
-.idea-title{font-family:var(--font-display);font-size:32px;font-weight:500;line-height:1.15;margin-bottom:12px;letter-spacing:-.01em}
-.idea-desc{font-size:13px;color:#444;line-height:1.7;font-weight:300;margin-bottom:24px}
-.divider{height:1px;background:var(--border);margin:24px 0}
+.idea-title{font-family:var(--font-display);font-size:32px;font-weight:500;line-height:1.15;margin-bottom:10px}
+.idea-desc{font-size:13px;color:#444;line-height:1.7;font-weight:300;margin-bottom:16px}
+.idea-addr{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);margin-bottom:8px;font-weight:300}
+.idea-addr svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.8;fill:none;flex-shrink:0}
+.idea-link{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--black);border-bottom:1px solid rgba(0,0,0,.2);padding-bottom:1px;letter-spacing:.04em;text-decoration:none;margin-bottom:16px}
+.idea-link svg{width:12px;height:12px;stroke:currentColor;stroke-width:1.8;fill:none}
+.divider{height:1px;background:var(--border);margin:20px 0}
 .section-label{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px}
-.action-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+/* ПЛАН / БЫЛИ */
+.action-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 .btn-action{display:inline-flex;align-items:center;gap:6px;padding:10px 16px;border:1px solid var(--border);background:transparent;color:var(--black);font-family:var(--font-body);font-size:12px;cursor:pointer;letter-spacing:.04em;transition:all .2s;text-decoration:none}
 .btn-action:hover{background:var(--cream)}
 .btn-action.primary{background:var(--black);color:var(--white);border-color:var(--black)}
 .btn-action.primary:hover{opacity:.85}
 .btn-action svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.8;fill:none;flex-shrink:0}
-.stars-row{display:flex;gap:8px;margin-bottom:18px}
-.star{font-size:30px;cursor:pointer;color:#e0ddd8;transition:color .1s;line-height:1;user-select:none}
+/* Запланировано блок */
+.planned-block{margin-bottom:16px}
+.planned-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.planned-date-text{font-size:13px;color:var(--black);font-weight:300}
+.btn-cancel-plan{font-size:11px;color:var(--muted);background:none;border:none;border-bottom:1px solid rgba(0,0,0,.2);cursor:pointer;font-family:var(--font-body);padding:0;letter-spacing:.04em}
+.plan-date-edit{font-size:13px;font-family:var(--font-body);padding:8px 10px;border:1px solid var(--border);background:var(--cream);color:var(--black);outline:none;-webkit-appearance:none;width:100%;max-width:200px}
+/* КАРТА */
+.map-wrap{margin-bottom:20px}
+.map-frame{width:100%;height:200px;border:none;display:block;background:#e8e4de}
+/* ОЦЕНКА */
+.stars-row{display:flex;gap:8px;margin-bottom:16px}
+.star{font-size:28px;cursor:pointer;color:#e0ddd8;transition:color .1s;line-height:1;user-select:none}
 .star.on{color:#FDD663}
 .review-ta{width:100%;font-size:13px;font-family:var(--font-body);padding:12px;border:1px solid var(--border);background:var(--cream);color:var(--black);resize:none;height:80px;outline:none;font-weight:300}
 .review-ta:focus{border-color:var(--black)}
-.btn-small{padding:8px 16px;background:var(--black);color:#fff;border:none;font-family:var(--font-body);font-size:11px;letter-spacing:.06em;cursor:pointer;margin-top:8px}
-.date-wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.btn-small{padding:8px 16px;background:var(--black);color:#fff;border:none;font-family:var(--font-body);font-size:11px;letter-spacing:.06em;cursor:pointer;margin-top:8px;display:block}
+.date-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}
 .date-label{font-size:11px;color:var(--muted)}
 .date-input{font-size:12px;font-family:var(--font-body);padding:8px 10px;border:1px solid var(--border);background:var(--cream);color:var(--black);outline:none;-webkit-appearance:none}
 .date-input:focus{border-color:var(--black)}
-.repeat-badge{font-size:11px;color:var(--muted);padding:4px 10px;border:1px solid var(--border)}
-.addr-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin-bottom:10px;font-weight:300}
-.addr-row svg{width:14px;height:14px;stroke:currentColor;stroke-width:1.8;fill:none;flex-shrink:0}
-.edit-toggle{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);cursor:pointer;letter-spacing:.04em;background:none;border:none;font-family:var(--font-body);padding:0;margin-bottom:16px}
+.dates-list{font-size:11px;color:var(--muted);margin-top:4px;font-weight:300}
+/* РЕДАКТИРОВАТЬ */
+.edit-toggle{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);cursor:pointer;letter-spacing:.04em;background:none;border:none;font-family:var(--font-body);padding:0;margin-bottom:12px}
 .edit-toggle:hover{color:var(--black)}
 .edit-toggle svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.8;fill:none}
-.edit-form{display:none;border-top:1px solid var(--border);padding-top:20px;margin-bottom:20px}
+.edit-form{display:none;border-top:1px solid var(--border);padding-top:16px;margin-bottom:16px}
 .form-row{margin-bottom:12px}
 .form-row label{display:block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
 .form-row input,.form-row textarea,.form-row select{width:100%;font-size:13px;font-family:var(--font-body);padding:10px 12px;border:1px solid var(--border);background:var(--cream);color:var(--black);outline:none;-webkit-appearance:none}
 .form-row input:focus,.form-row textarea:focus,.form-row select:focus{border-color:var(--black)}
 .form-row textarea{height:60px;resize:none}
-.del-btn{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);cursor:pointer;letter-spacing:.04em;background:none;border:none;font-family:var(--font-body);padding:0;margin-top:20px}
+.del-btn{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);cursor:pointer;letter-spacing:.04em;background:none;border:none;font-family:var(--font-body);padding:0;margin-top:12px}
 .del-btn:hover{color:#c00}
 .del-btn svg{width:13px;height:13px;stroke:currentColor;stroke-width:1.8;fill:none}
 .sync-bar{position:fixed;bottom:16px;right:16px;display:flex;align-items:center;gap:6px;font-size:10px;color:var(--muted);background:rgba(250,250,248,.92);padding:6px 10px;border:1px solid var(--border)}
@@ -63,8 +80,18 @@ body{font-family:var(--font-body);background:var(--white);color:var(--black);min
 .confirm-btns{display:flex;gap:8px}
 .btn-del-confirm{flex:1;padding:11px;background:var(--black);color:#fff;border:none;font-family:var(--font-body);font-size:12px;cursor:pointer;letter-spacing:.06em}
 .btn-del-cancel{flex:1;padding:11px;border:1px solid var(--border);background:transparent;font-family:var(--font-body);font-size:12px;cursor:pointer;color:var(--muted)}
+.plan-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.plan-modal-bg.show{display:flex}
+.plan-modal{background:var(--white);width:100%;max-width:360px;padding:28px 20px;margin:16px}
+.plan-modal h3{font-family:var(--font-display);font-size:20px;font-weight:500;margin-bottom:6px}
+.plan-modal p{font-size:12px;color:var(--muted);margin-bottom:20px;font-weight:300;line-height:1.5}
+.plan-date-input{width:100%;font-size:13px;font-family:var(--font-body);padding:10px 12px;border:1px solid var(--border);background:var(--cream);color:var(--black);outline:none;margin-bottom:10px;display:none;-webkit-appearance:none}
+.plan-btns{display:flex;flex-direction:column;gap:8px}
+.btn-plan-confirm{padding:11px;background:var(--black);color:#fff;border:none;font-family:var(--font-body);font-size:12px;cursor:pointer;letter-spacing:.06em;text-align:left}
+.btn-plan-later{padding:11px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;cursor:pointer;letter-spacing:.06em;text-align:left}
+.btn-cancel-form{padding:11px;border:1px solid var(--border);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:12px;cursor:pointer}
+@media(min-width:600px){.plan-modal-bg{align-items:center}}
 </style>
-<script>const _p="memory";if(localStorage.getItem("curly_auth")!==_p){const inp=prompt("Введите пароль:");if(inp===_p){localStorage.setItem("curly_auth",_p);}else{document.body.innerHTML="<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:Georgia,serif;color:#999;font-size:14px">Неверный пароль</div>";throw new Error("auth");}}</script>
 </head>
 <body>
 <div class="hero" id="hero">
@@ -74,16 +101,8 @@ body{font-family:var(--font-body);background:var(--white);color:var(--black);min
   </div>
   <div class="hero-emoji" id="hero-emoji"></div>
 </div>
-
-<div class="content" id="content">
-  <div style="text-align:center;padding:3rem;color:#999;font-size:13px">Загрузка...</div>
-</div>
-
-<div class="sync-bar">
-  <div class="sync-dot syncing" id="sync-dot"></div>
-  <span id="sync-text">...</span>
-</div>
-
+<div class="content" id="content"><div style="text-align:center;padding:3rem;color:#999;font-size:13px">Загрузка...</div></div>
+<div class="sync-bar"><div class="sync-dot syncing" id="sync-dot"></div><span id="sync-text">...</span></div>
 <div class="confirm-overlay" id="confirm-overlay">
   <div class="confirm-box">
     <p>Удалить эту идею? Она попадёт в список удалённых.</p>
@@ -93,7 +112,20 @@ body{font-family:var(--font-body);background:var(--white);color:var(--black);min
     </div>
   </div>
 </div>
+<div class="plan-modal-bg" id="plan-modal-bg">
+  <div class="plan-modal">
+    <h3>Запланировать</h3>
+    <p>Выберите дату или добавьте в план — определитесь позже</p>
+    <input type="date" class="plan-date-input" id="plan-date-input">
+    <div class="plan-btns">
+      <button class="btn-plan-confirm" onclick="togglePlanDate()">📅 Выбрать дату</button>
+      <button class="btn-plan-later" onclick="planWithoutDate()">Добавить в план, дату выберем позже</button>
+      <button class="btn-cancel-form" onclick="closePlanModal()" style="margin-top:4px">Отмена</button>
+    </div>
+  </div>
+</div>
 
+<script src="https://api-maps.yandex.ru/2.1/?apikey=3721b472-c7ca-4adf-824d-50a59f74f1d3&lang=ru_RU"></script>
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -101,40 +133,129 @@ const app=initializeApp({databaseURL:"https://curly-dates-default-rtdb.europe-we
 const db=getDatabase(app);
 const id=new URLSearchParams(window.location.search).get('id');
 const catMeta={active:{label:'Активное',emoji:'🎯'},trip:{label:'Поездка',emoji:'✈️'},food:{label:'Ресторан',emoji:'🍽️'},sport:{label:'Спорт',emoji:'⚡'},culture:{label:'Культура',emoji:'🎭'},spa:{label:'Спа',emoji:'🛁'}};
-let idea=null;
+let idea=null, ymap=null, geocoded=false;
+
 function setSyncStatus(s,t){document.getElementById('sync-dot').className='sync-dot'+(s==='syncing'?' syncing':s==='error'?' error':'');document.getElementById('sync-text').textContent=t;}
+function parseDate(str){if(!str)return null;const[y,m,d]=str.split('-');return new Date(+y,+m-1,+d);}
+function formatDate(str,opts){const d=parseDate(str);return d?d.toLocaleDateString('ru',opts):'';}
+
 async function patch(data){setSyncStatus('syncing','Сохраняем...');await update(ref(db,'ideas/'+id),data);setSyncStatus('ok','Сохранено');}
-onValue(ref(db,'ideas/'+id),snap=>{idea=snap.val();if(!idea){document.getElementById('content').innerHTML='<div style="text-align:center;padding:3rem;color:#999">Идея не найдена</div>';return;}setSyncStatus('ok','Синхронизировано');renderPage();},err=>setSyncStatus('error',err.message));
+
+onValue(ref(db,'ideas/'+id),snap=>{
+  idea=snap.val();
+  if(!idea){document.getElementById('content').innerHTML='<div style="text-align:center;padding:3rem;color:#999">Идея не найдена</div>';return;}
+  setSyncStatus('ok','Синхронизировано');
+  renderPage();
+  initMap();
+},err=>setSyncStatus('error',err.message));
+
+function initMap(){
+  if(!idea||ymap)return;
+  ymaps.ready(async()=>{
+    // Геокодируем если нет координат
+    let lat=idea.lat, lon=idea.lon;
+    if((!lat||!lon)&&idea.addr&&!geocoded){
+      geocoded=true;
+      try{
+        const res=await ymaps.geocode(idea.addr,{results:1});
+        const obj=res.geoObjects.get(0);
+        if(obj){const c=obj.geometry.getCoordinates();lat=c[0];lon=c[1];await patch({lat,lon});}
+      }catch(e){}
+    }
+    if(!lat||!lon)return;
+    const mapEl=document.getElementById('idea-map');
+    if(!mapEl)return;
+    ymap=new ymaps.Map(mapEl,{center:[lat,lon],zoom:14,controls:['zoomControl']},{suppressMapOpenBlock:true});
+    const pm=new ymaps.Placemark([lat,lon],{hintContent:idea.title},{preset:'islands#circleDotIcon',iconColor:'#0f0f0f'});
+    ymap.geoObjects.add(pm);
+  });
+}
+
 function renderPage(){
   if(!idea)return;
   const m=catMeta[idea.cat]||catMeta.active;
+  // Hero
   const hero=document.getElementById('hero');
   hero.querySelectorAll('.hero-real-img').forEach(e=>e.remove());
-  if(idea.img){const img=document.createElement('img');img.className='hero-img hero-real-img';img.src=idea.img;img.alt=idea.title;img.onerror=()=>img.remove();hero.insertBefore(img,hero.querySelector('.hero-back'));}
   document.getElementById('hero-emoji').textContent=m.emoji;
-  const svg=document.getElementById('like-svg');
-  if(idea.liked){svg.querySelector('path').setAttribute('fill','#e8304a');svg.querySelector('path').setAttribute('stroke','#e8304a');}
-  else{svg.querySelector('path').setAttribute('fill','none');svg.querySelector('path').setAttribute('stroke','#fff');}
+  if(idea.img){
+    const img=document.createElement('img');
+    img.className='hero-real-img';
+    img.src=idea.img;
+    img.alt=idea.title;
+    img.onerror=()=>img.remove();
+    // insert before back button
+    hero.insertBefore(img,hero.querySelector('.hero-back'));
+  }
+  // Like
+  const path=document.getElementById('like-svg').querySelector('path');
+  if(idea.liked){path.setAttribute('fill','#e8304a');path.setAttribute('stroke','#e8304a');}
+  else{path.setAttribute('fill','none');path.setAttribute('stroke','#fff');}
+
+  const ymap_url=idea.addr?`https://yandex.ru/maps/?text=${encodeURIComponent(idea.addr)}`:'';
   const stars=[1,2,3,4,5].map(n=>`<span class="star ${n<=(idea.rating||0)?'on':''}" onclick="setRating(${n})">★</span>`).join('');
-  const ymap=idea.addr?`https://yandex.ru/maps/?text=${encodeURIComponent(idea.addr)}`:'';
-  const dateStr=idea.date?new Date(idea.date).toLocaleDateString('ru',{day:'numeric',month:'long',year:'numeric'}):'';
-  const plannedDateStr=idea.plannedDate?new Date(idea.plannedDate).toLocaleDateString('ru',{day:'numeric',month:'long',year:'numeric'}):'';
+  const dates=idea.dates||[];
+  const times=dates.length;
+  const dateStr=idea.date?formatDate(idea.date,{day:'numeric',month:'long',year:'numeric'}):'';
+  const plannedDateStr=idea.plannedDate?formatDate(idea.plannedDate,{day:'numeric',month:'long',year:'numeric'}):'Без даты';
+
+  // Блок планирования / были
+  let planBlock='';
+  if(idea.planned){
+    planBlock=`
+      <div class="planned-block">
+        <div class="section-label">Запланировано</div>
+        <div class="planned-row">
+          <span class="planned-date-text">📅 ${plannedDateStr}</span>
+          <button class="btn-cancel-plan" onclick="cancelPlan()">отменить</button>
+        </div>
+        <input type="date" class="plan-date-edit" id="plan-date-edit" value="${idea.plannedDate||''}" onchange="savePlannedDate(this.value)" placeholder="Изменить дату">
+        <div style="margin-top:8px">
+          <button class="btn-action primary" onclick="markDone()">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            Отметить как были
+          </button>
+        </div>
+      </div>`;
+  } else if(idea.done&&!idea.repeat){
+    planBlock=`
+      <div class="action-row">
+        <button class="btn-action" onclick="openPlanModal()">↩ Повторить</button>
+        ${ymap_url?`<a class="btn-action" href="${ymap_url}" target="_blank"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>На карте</a>`:''}
+        ${idea.link?`<a class="btn-action" href="${idea.link}" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Сайт</a>`:''}
+      </div>`;
+  } else {
+    planBlock=`
+      <div class="action-row">
+        <button class="btn-action primary" onclick="markDone()">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          Отметить как были
+        </button>
+        <button class="btn-action" onclick="openPlanModal()">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Запланировать
+        </button>
+        ${ymap_url?`<a class="btn-action" href="${ymap_url}" target="_blank"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>На карте</a>`:''}
+        ${idea.link?`<a class="btn-action" href="${idea.link}" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Сайт</a>`:''}
+      </div>`;
+  }
+
   document.getElementById('content').innerHTML=`
     <div class="idea-cat">${m.label}</div>
     <div class="idea-title">${idea.title}</div>
-    <div class="idea-desc">${idea.desc||''}</div>
-    ${idea.addr?`<div class="addr-row"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${idea.addr}</div>`:''}
-    <div class="action-row">
-      <button class="btn-action ${idea.done?'primary':''}" onclick="toggleDone()">
-        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-        ${idea.done?'Были':'Отметить как были'}
-      </button>
-      ${idea.done?`<button class="btn-action" onclick="doRepeat()"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>Повторить${(idea.times||0)>1?' ×'+idea.times:''}</button>`:''}
-      ${idea.planned&&!idea.done?`<div style="display:flex;flex-direction:column;gap:4px"><div style="font-size:11px;color:var(--muted);padding:10px 0">${plannedDateStr?'Запланировано: '+plannedDateStr:'Запланировано — дата не выбрана'}</div><input type="date" value="${idea.plannedDate||''}" onchange="patch({plannedDate:this.value})" style="font-size:11px;font-family:var(--font-body);padding:6px 10px;border:1px solid var(--border);background:var(--cream);color:var(--black);outline:none"></div>`:''}
-      ${!idea.planned&&!idea.done?`<button class="btn-action" onclick="openPlanHere()"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Запланировать</button>`:''}
-      ${ymap?`<a class="btn-action" href="${ymap}" target="_blank"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>На карте</a>`:''}
-      ${idea.link?`<a class="btn-action" href="${idea.link}" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Сайт</a>`:''}
-    </div>
+    ${idea.desc?`<div class="idea-desc">${idea.desc}</div>`:''}
+    ${idea.addr?`<div class="idea-addr"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${idea.addr}</div>`:''}
+    ${idea.link&&!idea.planned&&!idea.done?`<a class="idea-link" href="${idea.link}" target="_blank"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Открыть сайт</a>`:''}
+
+    <div class="divider"></div>
+    ${planBlock}
+
+    ${(idea.lat&&idea.lon)||idea.addr?`
+    <div class="map-wrap">
+      <div class="section-label">На карте</div>
+      <div class="map-frame" id="idea-map"></div>
+    </div>`:''}
+
     ${idea.done?`
     <div class="divider"></div>
     <div class="section-label">Оценка</div>
@@ -144,37 +265,96 @@ function renderPage(){
     <button class="btn-small" onclick="saveReview()">Сохранить отзыв</button>
     <div class="divider"></div>
     <div class="section-label">Дата свидания</div>
-    <div class="date-wrap">
+    <div class="date-row">
       <span class="date-label">📅</span>
       <input class="date-input" type="date" id="date-input" value="${idea.date||''}" onchange="saveDate(this.value)">
       ${dateStr?`<span style="font-size:12px;color:var(--muted)">${dateStr}</span>`:''}
-      ${(idea.times||0)>1?`<span class="repeat-badge">×${idea.times} раза</span>`:''}
-    </div>`:''}
+    </div>
+    ${times>1?`<div class="dates-list">Были ${times} раза: ${dates.map(d=>formatDate(d,{day:'numeric',month:'short',year:'numeric'})).join(', ')}</div>`:''}
+    `:''}
+
     <div class="divider"></div>
-    <button class="edit-toggle" onclick="toggleEdit()"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Редактировать</button>
+    <button class="edit-toggle" onclick="toggleEdit()">
+      <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+      Редактировать
+    </button>
     <div class="edit-form" id="edit-form">
       <div class="form-row"><label>Название</label><input type="text" id="e-title" value="${idea.title||''}"></div>
       <div class="form-row"><label>Описание</label><textarea id="e-desc">${idea.desc||''}</textarea></div>
-      <div class="form-row"><label>Категория</label><select id="e-cat"><option value="active" ${idea.cat==='active'?'selected':''}>Активное</option><option value="trip" ${idea.cat==='trip'?'selected':''}>Поездка</option><option value="food" ${idea.cat==='food'?'selected':''}>Ресторан</option><option value="sport" ${idea.cat==='sport'?'selected':''}>Спорт</option><option value="culture" ${idea.cat==='culture'?'selected':''}>Культура</option><option value="spa" ${idea.cat==='spa'?'selected':''}>Спа</option></select></div>
+      <div class="form-row"><label>Категория</label>
+        <select id="e-cat">
+          <option value="active" ${idea.cat==='active'?'selected':''}>Активное</option>
+          <option value="trip" ${idea.cat==='trip'?'selected':''}>Поездка</option>
+          <option value="food" ${idea.cat==='food'?'selected':''}>Ресторан</option>
+          <option value="sport" ${idea.cat==='sport'?'selected':''}>Спорт</option>
+          <option value="culture" ${idea.cat==='culture'?'selected':''}>Культура</option>
+          <option value="spa" ${idea.cat==='spa'?'selected':''}>Спа</option>
+        </select>
+      </div>
       <div class="form-row"><label>Фото (URL)</label><input type="text" id="e-img" value="${idea.img||''}"></div>
       <div class="form-row"><label>Адрес</label><input type="text" id="e-addr" value="${idea.addr||''}"></div>
       <div class="form-row"><label>Сайт</label><input type="text" id="e-link" value="${idea.link||''}"></div>
       <button class="btn-small" onclick="saveEdit()">Сохранить изменения</button>
     </div>
-    <button class="del-btn" onclick="document.getElementById('confirm-overlay').classList.add('show')"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg> Удалить идею</button>
+    <button class="del-btn" onclick="document.getElementById('confirm-overlay').classList.add('show')">
+      <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M9 6V4h6v2"/></svg>
+      Удалить идею
+    </button>
   `;
+  // reinit map after render
+  setTimeout(initMap, 100);
 }
+
 window.toggleLike=async()=>{if(idea)await patch({liked:!idea.liked});};
-window.toggleDone=async()=>{if(!idea)return;const newDone=!idea.done;await patch({done:newDone,planned:false,times:newDone?(idea.times||0)+1:Math.max(0,(idea.times||1)-1)});};
-window.doRepeat=async()=>{if(idea)await patch({times:(idea.times||1)+1});};
+
+window.markDone=async()=>{
+  if(!idea)return;
+  const today=new Date();
+  const dateStr=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+  const dates=idea.dates||[];
+  if(!dates.includes(dateStr))dates.push(dateStr);
+  await patch({done:true,planned:false,plannedDate:'',repeat:false,date:dateStr,dates});
+};
+
+window.cancelPlan=async()=>{await patch({planned:false,plannedDate:'',repeat:false});};
+window.savePlannedDate=async val=>{await patch({plannedDate:val});};
+
+window.openPlanModal=()=>{
+  document.getElementById('plan-date-input').value='';
+  document.getElementById('plan-date-input').style.display='none';
+  document.getElementById('plan-modal-bg').classList.add('show');
+};
+window.closePlanModal=()=>document.getElementById('plan-modal-bg').classList.remove('show');
+window.togglePlanDate=()=>{
+  const inp=document.getElementById('plan-date-input');
+  inp.style.display=inp.style.display==='none'?'block':'none';
+  if(inp.style.display==='block'){inp.focus();inp.onchange=async()=>{await patch({planned:true,plannedDate:inp.value,repeat:true});closePlanModal();};}
+};
+window.planWithoutDate=async()=>{await patch({planned:true,plannedDate:'',repeat:true});closePlanModal();};
+
 window.setRating=async r=>{if(idea)await patch({rating:r});};
 window.saveReview=async()=>{const ta=document.getElementById('review-ta');if(ta&&idea)await patch({review:ta.value});};
-window.saveDate=async val=>{if(idea)await patch({date:val});};
-window.openPlanHere=()=>{const d=prompt('Введите дату (ГГГГ-ММ-ДД) или оставьте пустым для плана без даты:');if(d===null)return;patch({planned:true,plannedDate:d||''});};
+window.saveDate=async val=>{
+  if(!idea)return;
+  const dates=idea.dates||[];
+  if(val&&!dates.includes(val))dates.push(val);
+  await patch({date:val,dates});
+};
 window.toggleEdit=()=>{const f=document.getElementById('edit-form');if(f)f.style.display=f.style.display==='block'?'none':'block';};
-window.saveEdit=async()=>{await patch({title:document.getElementById('e-title').value.trim(),desc:document.getElementById('e-desc').value.trim(),cat:document.getElementById('e-cat').value,img:document.getElementById('e-img').value.trim(),addr:document.getElementById('e-addr').value.trim(),link:document.getElementById('e-link').value.trim()});toggleEdit();};
+window.saveEdit=async()=>{
+  await patch({
+    title:document.getElementById('e-title').value.trim(),
+    desc:document.getElementById('e-desc').value.trim(),
+    cat:document.getElementById('e-cat').value,
+    img:document.getElementById('e-img').value.trim(),
+    addr:document.getElementById('e-addr').value.trim(),
+    link:document.getElementById('e-link').value.trim(),
+  });
+  toggleEdit();
+};
 window.confirmDelete=async()=>{await patch({deleted:true});window.location.href='index.html';};
-window.patch=patch;
+document.getElementById('plan-modal-bg').addEventListener('click',e=>{if(e.target===e.currentTarget)closePlanModal();});
+document.getElementById('confirm-overlay').addEventListener('click',e=>{if(e.target===e.currentTarget)e.currentTarget.classList.remove('show');});
 </script>
 </body>
 </html>
